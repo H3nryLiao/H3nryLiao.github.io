@@ -121,7 +121,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -159,6 +159,145 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/19/ATourofGoNote_2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Henry Liao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coding and Living.">
+      <meta itemprop="description" content="An unimpressive blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coding and Living.">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/04/19/ATourofGoNote_2/" class="post-title-link" itemprop="url">A Tour of Go笔记——流程控制语句</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-04-19 16:35:31 / Modified: 16:35:03" itemprop="dateCreated datePublished" datetime="2022-04-19T16:35:31+08:00">2022-04-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h2><p>Go只有一种循环结构：<code>for</code>循环</p>
+<p>Go的<code>for</code>循环结构如下</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> 初始化语句(可选) ; 条件表达式 ; 后置语句(可选) &#123;</span><br><span class="line">    循环语句</span><br><span class="line">&#125;</span><br><span class="line">初始化语句通常为一句短变量声明，如 i := <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，Go的<code>for</code>循环<strong>无需括号</strong>将循环控制语句包含，但必须用{}包括循环语句</p>
+<h3 id="for就是while"><a href="#for就是while" class="headerlink" title="for就是while"></a>for就是while</h3><p>在Go中，若条件控制语句只保留条件表达式，则为<code>while</code>循环</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i &lt; <span class="number">100</span> &#123;</span><br><span class="line">    i += <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="无限循环"><a href="#无限循环" class="headerlink" title="无限循环"></a>无限循环</h3><p>若条件控制语句为空，则该循环不会停止</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="条件语句"><a href="#条件语句" class="headerlink" title="条件语句"></a>条件语句</h2><p>和<code>for</code>循环类似，条件表达式无需括号包含，但必须用{}包含分支语句</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> x &lt; <span class="number">0</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="if-with-a-short-statement"><a href="#if-with-a-short-statement" class="headerlink" title="if-with-a-short-statement"></a>if-with-a-short-statement</h3><p>Go中，在<code>if</code>语句的条件表达式之前可以执行一条简单的语句</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;math&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">pow</span><span class="params">(x, n, lim <span class="type">float64</span>)</span></span> <span class="type">float64</span> &#123;</span><br><span class="line">    <span class="comment">//在判定条件表达式之前</span></span><br><span class="line">    <span class="comment">//声明了一个局部变量v并初始化</span></span><br><span class="line">    <span class="comment">//需要注意的是，其作用域仅在if和if对应的else块中</span></span><br><span class="line">	<span class="keyword">if</span> v := math.Pow(x, n); v &lt; lim &#123;</span><br><span class="line">		<span class="keyword">return</span> v</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="comment">//若此处return v</span></span><br><span class="line">    <span class="comment">//会报undefined的错，因为已经不在v的作用域下了</span></span><br><span class="line">	<span class="keyword">return</span> lim</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(</span><br><span class="line">		pow(<span class="number">3</span>, <span class="number">2</span>, <span class="number">10</span>),</span><br><span class="line">		pow(<span class="number">3</span>, <span class="number">3</span>, <span class="number">20</span>),</span><br><span class="line">	)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="if-else写法"><a href="#if-else写法" class="headerlink" title="if-else写法"></a>if-else写法</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> condition &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>if</code>的条件表达式中定义的局部变量，也存活于对应的所有<code>else</code>中</p>
+<h3 id="switch"><a href="#switch" class="headerlink" title="switch"></a>switch</h3><p>和C、C++、Java中的switch不同，Go中的switch只会运行选定的case</p>
+<p>且case无需为常量，取值也不必为整数，如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;runtime&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Print(<span class="string">&quot;Go runs on &quot;</span>)</span><br><span class="line">    <span class="comment">//同if语句一样</span></span><br><span class="line">    <span class="comment">//condition前可以执行一条简短的语句</span></span><br><span class="line">    <span class="comment">//这里是声明一个局部变量os，初始化为代码运行的操作环境字符串</span></span><br><span class="line">	<span class="keyword">switch</span> os := runtime.GOOS; os &#123;</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&quot;darwin&quot;</span>:</span><br><span class="line">		fmt.Println(<span class="string">&quot;OS X.&quot;</span>)</span><br><span class="line">	<span class="keyword">case</span> <span class="string">&quot;linux&quot;</span>:</span><br><span class="line">		fmt.Println(<span class="string">&quot;Linux.&quot;</span>)</span><br><span class="line">	<span class="keyword">default</span>:</span><br><span class="line">		<span class="comment">// freebsd, openbsd,</span></span><br><span class="line">		<span class="comment">// plan9, windows...</span></span><br><span class="line">		fmt.Printf(<span class="string">&quot;%s.\n&quot;</span>, os)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>若switch语句没有condition，相当于一长串的if-then-else语句</p>
+<p>如</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	t := time.Now()</span><br><span class="line">	<span class="keyword">switch</span> &#123;</span><br><span class="line">	<span class="keyword">case</span> t.Hour() &lt; <span class="number">12</span>:</span><br><span class="line">		fmt.Println(<span class="string">&quot;Good morning!&quot;</span>)</span><br><span class="line">	<span class="keyword">case</span> t.Hour() &lt; <span class="number">17</span>:</span><br><span class="line">		fmt.Println(<span class="string">&quot;Good afternoon.&quot;</span>)</span><br><span class="line">	<span class="keyword">default</span>:</span><br><span class="line">		fmt.Println(<span class="string">&quot;Good evening.&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="defer语句"><a href="#defer语句" class="headerlink" title="defer语句"></a>defer语句</h2><p>defer语句会将函数推迟到外层函数返回后执行，该语句通常用于各种清理函数的简化执行，如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">CopyFile</span><span class="params">(dstName, srcName <span class="type">string</span>)</span></span> (written <span class="type">int64</span>, err <span class="type">error</span>) &#123;</span><br><span class="line">    src, err := os.Open(srcName)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    dst, err := os.Create(dstName)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    written, err = io.Copy(dst, src)</span><br><span class="line">    dst.Close()</span><br><span class="line">    src.Close()</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码功能是打开两个文件，然后将其中一个文件的内容拷贝到另一个文件中。</p>
+<p>这段代码的bug在于，如果目标文件创建失败，即<code>os.Create(dstName)</code>失败，函数会返回，但此时<code>src</code>打开的源文件并没有关闭</p>
+<p>当然我们也可以在dst的错误处理中关闭源文件：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dst, err := os.Create(dstName)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    src.Close()</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但如果程序变得复杂，同时打开了多个文件，在每个错误处理中去作清理操作就非常麻烦</p>
+<p>Go提供的defer语句带来了这样一种写法：</p>
+<p>打开文件之后，立即关闭文件，不过关闭文件的函数被defer，这样一来无论是外层函数正常执行返回还是错误返回，都能保证文件关闭</p>
+<p>并且这样的写法还保证了文件操作的原子性，对于每一个文件，打开和关闭操作是一块的，代码可读性更高也不容易犯错</p>
+<p>所以上面的文件操作代码可以这样写：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">CopyFile</span><span class="params">(dstName, srcName <span class="type">string</span>)</span></span> (written <span class="type">int64</span>, err <span class="type">error</span>) &#123;</span><br><span class="line">    src, err := os.Open(srcName)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">defer</span> src.Close()</span><br><span class="line">    dst, err := os.Create(dstName)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">defer</span> dst.Close()</span><br><span class="line">    written, err = io.Copy(dst, src)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="defer语句的三条性质"><a href="#defer语句的三条性质" class="headerlink" title="defer语句的三条性质"></a>defer语句的三条性质</h3><ul>
+<li><p>被defer函数的参数会被立即计算</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">a</span><span class="params">()</span></span> &#123;</span><br><span class="line">    i := <span class="number">0</span></span><br><span class="line">    <span class="keyword">defer</span> fmt.Println(i)</span><br><span class="line">    i++</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个例子中，外层函数执行完之后，<code>i</code>的值为1</p>
+<p>但<code>fmt.Println(i)</code>虽然被延迟，其参数<code>i</code>被立即计算并保存，所以外层<code>return</code>之后，延迟函数打印<code>0</code></p>
+</li>
+<li><p>多个被defer的函数调用被压入栈中，先进后出</p>
+<p>上面的文件操作代码中，<code>src.Close()</code>先被压入栈中，随后是<code>dst.Close()</code>。调用时，先关闭<code>dst</code>的文件，再关闭<code>src</code>的文件</p>
+</li>
+<li><p>defer函数可以读取外层函数的命名返回值，也可以对其赋值</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">c</span><span class="params">()</span></span> (i <span class="type">int</span>) &#123;</span><br><span class="line">    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123; i++ &#125;()</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样会返回<code>2</code></p>
+<p>官方博客说这样方便修改函数的错误返回值，没太看懂，先留着。</p>
+<p>官方博客还介绍了Panic和Recover两种函数，详见<a target="_blank" rel="noopener" href="https://blog.go-zh.org/defer-panic-and-recover">Defer,Panic,and Recover</a></p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
