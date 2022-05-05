@@ -121,16 +121,16 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -159,6 +159,178 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/04/20/Git1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Henry Liao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coding and Living.">
+      <meta itemprop="description" content="An unimpressive blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coding and Living.">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/04/20/Git1/" class="post-title-link" itemprop="url">系统学习一下Git_1</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-04-20 16:36:32" itemprop="dateCreated datePublished" datetime="2022-04-20T16:36:32+08:00">2022-04-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-05-05 16:01:42" itemprop="dateModified" datetime="2022-05-05T16:01:42+08:00">2022-05-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>平时自己学习的时候对Git的使用仅仅局限于从Github克隆需要的软件，或者是写博客时将基于Github Pages的静态网站部署到仓库</p>
+<p>真正参与到大型项目开发中时才意识到自己对Git了解甚少，现在系统学习一下Git的使用</p>
+<h2 id="Git是什么"><a href="#Git是什么" class="headerlink" title="Git是什么"></a>Git是什么</h2><p><strong>分布式版本控制</strong>系统</p>
+<p><strong>版本控制</strong></p>
+<p>团队协作开发项目时，一般是不同的人来开发不同的模块</p>
+<p>提供项目源文件、自动整合所开发的模块、记录模块的改动等等就是Git要做的事</p>
+<p><strong>分布式</strong></p>
+<p>集中式：版本库存放在中央处理器，协同开发的流程是：从中央处理器取得最新版本进行开发，开发完成后推送回中央处理器</p>
+<p>分布式：每个人的电脑都存有完整的版本库，开发完成后互相推送改动</p>
+<h2 id="版本库"><a href="#版本库" class="headerlink" title="版本库"></a>版本库</h2><p>版本库即Github中的仓库（repository），对于版本库中每个文件的修改、删除，Git都能跟踪，或者还原</p>
+<p><strong>将目录变成Git可以管理的仓库：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在根目录下</span></span><br><span class="line">git init</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>git init</code>命令后，仓库就建好了，并且根目录下会生成一个<code>.git</code>目录，该目录用来跟踪和管理版本库</p>
+<p><strong>将已有的文件添加到仓库：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在文件所属的目录下</span></span><br><span class="line">git add fileName</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，<code>git add</code>命令并不会帮你创建文件，而是将已有的文件添加到仓库中</p>
+<p><strong>将文件提交到仓库：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//-m参数后输入本次提交的说明，这样就能从历史记录中找到改动记录</span></span><br><span class="line">git commit -m <span class="string">&quot;wrote a readme file&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>所以Git添加文件需要两个步骤，一是使用<code>add</code>命令添加多个文件，再用<code>commit</code>命令一次提交</p>
+<p>如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add file1.txt</span><br><span class="line">git add file2.txt file3.txt</span><br><span class="line">git commit -m <span class="string">&quot;add 3 txt files&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>small tips：</p>
+<p>在命令行下用<code>ls</code>或<code>dir</code>命令查看当前目录的文件</p>
+<p><strong>查看仓库状态：</strong></p>
+<p>可以通过查看仓库状态来检查是否有未提交的修改</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
+
+<p>若需要检查文件具体的改动情况，使用<code>git diff</code>命令</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff fileName</span><br></pre></td></tr></table></figure>
+
+<h2 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h2><p>对于每一次的<code>git commit</code>提交，Git都会保存一个文件的快照以便于恢复</p>
+<p><code>git log</code>命令查看提交历史记录：</p>
+<p><img src="/.com//Git1%5Cgit_1.PNG"></p>
+<p>提交记录按时间顺序，从最近开始。对于每一条提交记录，第一行的序列号是每一次提交的版本号，第二行为提交作者，第三行为提交日期，最后是提交时附加的备注。</p>
+<p>对于最近的一次提交，可以看到<code>(HEAD-&gt; master)</code>的标识，表示当前版本指向最近的一次提交。</p>
+<p><strong>进行版本回退，就需要利用HEAD：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HEAD^	上一个版本</span><br><span class="line">HEAD^^	上上一个版本</span><br><span class="line">HEAD~n	上n个版本</span><br></pre></td></tr></table></figure>
+
+<p>对于上面图片中的例子仓库，我们回退到上一个版本，即<code>add distributed</code>的版本</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br></pre></td></tr></table></figure>
+
+<p>回退成功后，使用<code>cat</code>命令查看<code>readme.txt</code>中的内容</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat readme.txt</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，<code>readme</code>中的内容已经回退到上一个版本</p>
+<p>再使用<code>git log</code>查看提交的历史记录：</p>
+<p><img src="/.com//Git1%5Cgit_2.PNG"></p>
+<p>可以看到<code>HEAD</code>指针已经指向上一个版本，同时<code>git log</code>中已经找不到最开始的<code>append GPL</code>版本了</p>
+<p><strong>恢复到新版本：</strong></p>
+<p>要恢复到新版本只能通过版本号</p>
+<p>先使用<code>git reflog</code>查看所记录的每一次命令</p>
+<p><img src="/.com//Git1%5Cgit_3.PNG" alt="git_3"></p>
+<p>可见<code>15dca1c</code>是<code>append GPL</code>的版本号缩写</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard <span class="number">15</span>dca1c</span><br><span class="line"><span class="comment">//即可恢复到最新版本</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="工作区和暂存区"><a href="#工作区和暂存区" class="headerlink" title="工作区和暂存区"></a>工作区和暂存区</h2><h3 id="工作区（Working-Directory）"><a href="#工作区（Working-Directory）" class="headerlink" title="工作区（Working Directory）"></a>工作区（Working Directory）</h3><p>工作区即<code>git init</code>时的根目录</p>
+<h3 id="版本库（Repository）"><a href="#版本库（Repository）" class="headerlink" title="版本库（Repository）"></a>版本库（Repository）</h3><p>版本库即工作区中的<code>.git</code>隐藏文件夹</p>
+<p>其中包括暂存区（Stage）、自动创建的第一个分支<code>master</code>、指向<code>master</code>的一个指针<code>HEAD</code></p>
+<h3 id="暂存区（Stage）"><a href="#暂存区（Stage）" class="headerlink" title="暂存区（Stage）"></a>暂存区（Stage）</h3><p>前面已经提到，向仓库添加文件时需要两步</p>
+<p>第一步使用<code>git add</code>命令添加多个文件，这一步其实是将文件修改添加到暂存区</p>
+<p>第二部使用<code>git commit</code>命令提交修改，也就是将暂存区中的所有内容提交到当前分支</p>
+<p>也就是说，一旦提交，暂存区中保存的修改都会被清空。</p>
+<h3 id="Git跟踪并管理的是修改，而非文件"><a href="#Git跟踪并管理的是修改，而非文件" class="headerlink" title="Git跟踪并管理的是修改，而非文件"></a>Git跟踪并管理的是修改，而非文件</h3><p><strong>撤销修改</strong></p>
+<p>需要撤销的修改分为三种类型：</p>
+<ul>
+<li><p>工作区文件修改后还未<code>add</code>到暂存区中</p>
+<p>使用<code>git restore &lt;filename&gt;</code>即可撤销工作区的修改</p>
+</li>
+<li><p>工作区文件修改后已经<code>add</code>到暂存区中</p>
+<p>使用<code>git restore --staged &lt;filename&gt;</code>即可从暂存区中撤销修改，还需使用上面的命令撤销对工作区的修改</p>
+</li>
+<li><p>工作区文件<code>add</code>到暂存区后又作了修改</p>
+<p>先使用<code>git restore &lt;filename&gt;</code>撤销工作区的修改，此时文件为<code>add</code>到暂存区后的状态</p>
+</li>
+</ul>
+<p><strong>删除文件</strong></p>
+<p>在命令行下，使用命令<code>rm &lt;filename&gt;</code>即可从工作区中删除文件</p>
+<p>但删除后就与版本库不一致，<code>git status</code>会知道哪些文件被删除了</p>
+<p>如果想要从版本库中删除这个文件：</p>
+<p>使用<code>git rm &lt;filename&gt;</code>即可，但是从版本库中删除后还需要提交此次的删除修改</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git rm test.txt</span><br><span class="line">git commit -m <span class="string">&quot;delete test.txt&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果想要恢复这个文件：</p>
+<p>使用<code>git restore &lt;filename&gt;</code>，GIT会用版本库中的文件替换被删除的文件</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
