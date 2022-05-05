@@ -121,7 +121,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -159,6 +159,213 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/05/ATourofGoNote_3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Henry Liao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coding and Living.">
+      <meta itemprop="description" content="An unimpressive blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coding and Living.">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/05/ATourofGoNote_3/" class="post-title-link" itemprop="url">A Tour of Go笔记——结构体、切片、映射和函数值</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-05-05 16:53:21 / Modified: 16:51:56" itemprop="dateCreated datePublished" datetime="2022-05-05T16:53:21+08:00">2022-05-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h2><p>Go的指针定义：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> ptr *<span class="type">int</span></span><br></pre></td></tr></table></figure>
+
+<p>类型<code>*type</code>是指向<code>type</code>类型值的指针，其零值为<code>nil</code></p>
+<p><code>&amp;</code>取址操作符：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">i := <span class="number">10</span></span><br><span class="line">ptr = &amp;i</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，若指针变量p未定义过，应该用短变量声明定义：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">j := <span class="number">40</span></span><br><span class="line">p := &amp;j</span><br></pre></td></tr></table></figure>
+
+<p><code>*</code>解引用操作符：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//会格式化输出10</span></span><br><span class="line">fmt.Println(*ptr)</span><br><span class="line"><span class="comment">//i的值变为99</span></span><br><span class="line">*ptr = <span class="number">99</span></span><br></pre></td></tr></table></figure>
+
+<p>和C语言不同，Go没有指针运算</p>
+<h2 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h2><p>一个结构体是一组字段（field）</p>
+<p>定义语句如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Vertex <span class="keyword">struct</span> &#123;</span><br><span class="line">    x <span class="type">int</span></span><br><span class="line">    y <span class="type">int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将定义的结构体赋值给变量：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">v = Vertex&#123;<span class="number">1</span>, <span class="number">2</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>访问字段使用点号<code>.</code>来访问</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//输出1</span></span><br><span class="line">fmt.Println(v.x)</span><br></pre></td></tr></table></figure>
+
+<h3 id="结构体指针"><a href="#结构体指针" class="headerlink" title="结构体指针"></a>结构体指针</h3><p>结构体字段可以通过结构体指针来访问</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//现在ptr是一个指向Vertex类型结构体的指针变量</span></span><br><span class="line">ptr := &amp;v</span><br><span class="line"><span class="comment">//通过指针来访问结构体字段</span></span><br><span class="line">fmt.Println((*ptr).x)</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>*</code>解引用操作符得到结构体本身，再用<code>.</code>访问字段，很传统但却很啰嗦，Go语法允许使用<code>ptr.x</code>的写法直接访问结构体字段</p>
+<h3 id="结构体文法"><a href="#结构体文法" class="headerlink" title="结构体文法"></a>结构体文法</h3><p>结构体文法通过直接列出字段的值来分配新的结构体。</p>
+<p>字段名可以省略，以其类型的默认值赋值：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Vertex <span class="keyword">struct</span> &#123;</span><br><span class="line">	X, Y <span class="type">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">	v1 = Vertex&#123;<span class="number">1</span>, <span class="number">2</span>&#125;  <span class="comment">// 创建一个 Vertex 类型的结构体</span></span><br><span class="line">	v2 = Vertex&#123;X: <span class="number">1</span>&#125;  <span class="comment">// Y:0 被隐式地赋予</span></span><br><span class="line">	v3 = Vertex&#123;&#125;      <span class="comment">// X:0 Y:0</span></span><br><span class="line">	p  = &amp;Vertex&#123;<span class="number">1</span>, <span class="number">2</span>&#125; <span class="comment">// 创建一个 *Vertex 类型的结构体（指针）</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(v1, p, v2, v3)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>Go中数组的定义：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义了长度为n，元素类型为type的数组</span></span><br><span class="line"><span class="keyword">var</span> array [n]<span class="keyword">type</span></span><br><span class="line"><span class="comment">//数组文法，初始化的同时声明数组</span></span><br><span class="line">array2 := [<span class="number">3</span>]<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;</span><br><span class="line"><span class="comment">//在数组字面量中，也可以省略数组长度，由编译器指定</span></span><br><span class="line">array3 := [...]<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;</span><br><span class="line"><span class="comment">//array3的长度为3</span></span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，Go中数组的长度是不可改变的，属于类型的一部分，即<code>[4]int</code>和<code>[5]int</code>是完全不同的数组类型</p>
+<p>和C语言不同，数组变量代表整个数组，而非指向第一个元素的指针，所以在数组变量之间赋值或传递数组变量时会<strong>复制整个数组</strong></p>
+<h2 id="切片-slice"><a href="#切片-slice" class="headerlink" title="切片(slice)"></a>切片(slice)</h2><p>为了解决数组长度固定带来的不便，Go提出了切片的概念：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义了一个type类型的切片</span></span><br><span class="line"><span class="keyword">var</span> aSlice []<span class="keyword">type</span></span><br></pre></td></tr></table></figure>
+
+<p>切片只是数组的一种动态视图，初始化方法如下：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">anArray := [<span class="number">6</span>]<span class="type">int</span>&#123;<span class="number">3</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">1</span>&#125;</span><br><span class="line"><span class="comment">//初始化后，aSlice的值为&#123;4, 2, 5&#125;</span></span><br><span class="line">aSlice = anArray[<span class="number">1</span>:<span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+
+<p>对于<code>slice</code>的初始化语句<code>slice = array[low : high]</code>，Go取的是半开区间，左闭右开，用数学形式表达为<code>[low, high)</code></p>
+<p>上面说到，切片是数组的动态视图，所以不会存储任何数据，只是数组的一种引用，更改切片元素也会导致数组对应元素的修改</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	names := [<span class="number">4</span>]<span class="type">string</span>&#123;</span><br><span class="line">		<span class="string">&quot;John&quot;</span>,</span><br><span class="line">		<span class="string">&quot;Paul&quot;</span>,</span><br><span class="line">		<span class="string">&quot;George&quot;</span>,</span><br><span class="line">		<span class="string">&quot;Ringo&quot;</span>,</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(names)</span><br><span class="line">  <span class="comment">//a切片中观测到的数据为&#123;john, paul&#125;</span></span><br><span class="line">  <span class="comment">//b切片中观测到的数据为&#123;paul, george&#125;</span></span><br><span class="line">	a := names[<span class="number">0</span>:<span class="number">2</span>]</span><br><span class="line">	b := names[<span class="number">1</span>:<span class="number">3</span>]</span><br><span class="line">	fmt.Println(a, b)</span><br><span class="line">	<span class="comment">//对于每一个切片，也可以用自己的下标空间去访问能观测的数据</span></span><br><span class="line">  <span class="comment">//b切片中，b[0]观测到的是paul，b[1]观测到的是george</span></span><br><span class="line">	b[<span class="number">0</span>] = <span class="string">&quot;XXX&quot;</span></span><br><span class="line">  <span class="comment">//对b[0]进行修改后，a[1]观测值也更改为&quot;xxx&quot;,因为names数组的原始数据names[2]改变为&quot;xxx&quot;</span></span><br><span class="line">	fmt.Println(a, b)</span><br><span class="line">	fmt.Println(names)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="切片字面量"><a href="#切片字面量" class="headerlink" title="切片字面量"></a>切片字面量</h3><p>和数组字面量类似，不过切片文法没有长度：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">slice := []<span class="type">int</span>&#123;<span class="number">2</span>, <span class="number">4</span>, <span class="number">8</span>, <span class="number">9</span>&#125;</span><br><span class="line"><span class="comment">//切片字面量会先创建一个长度固定的数组（这里长度为4），然后将切片引用到该数组上</span></span><br><span class="line"><span class="comment">//即</span></span><br><span class="line">array := [<span class="number">4</span>]<span class="type">int</span>&#123;<span class="number">2</span>, <span class="number">4</span>, <span class="number">8</span>, <span class="number">9</span>&#125;</span><br><span class="line">slice = array[<span class="number">0</span>:<span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+
+<p>使用切片字面量定义的切片，切片的指针会指向数组第一个元素，且长度和容量均默认为数组长度</p>
+<p>例子程序中给出了一个声明结构体切片到简要写法：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">slice := []<span class="keyword">struct</span> &#123;</span><br><span class="line">  x <span class="type">int</span></span><br><span class="line">  y <span class="type">bool</span></span><br><span class="line">&#125; &#123;</span><br><span class="line">  &#123;<span class="number">1</span>, <span class="literal">true</span>&#125;,</span><br><span class="line">  &#123;<span class="number">2</span>, <span class="literal">false</span>&#125;,</span><br><span class="line">  &#123;<span class="number">3</span>, <span class="literal">false</span>&#125;,</span><br><span class="line">  <span class="comment">//这一行的逗号不能省略，否则报语法错误，why？</span></span><br><span class="line">  &#123;<span class="number">4</span>, <span class="literal">true</span>&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="切片的默认值"><a href="#切片的默认值" class="headerlink" title="切片的默认值"></a>切片的默认值</h3><p>切片的下界默认值为0，上界默认值为切片观测的数组长度</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//对于a这样一个长度为10的数组来说</span></span><br><span class="line"><span class="keyword">var</span> a [<span class="number">10</span>]<span class="type">int</span></span><br><span class="line"><span class="comment">//以下表达式等价</span></span><br><span class="line">a[:<span class="number">10</span>]</span><br><span class="line">a[<span class="number">0</span>:]</span><br><span class="line">a[:]</span><br><span class="line">a[<span class="number">0</span>:<span class="number">10</span>]</span><br></pre></td></tr></table></figure>
+
+<h3 id="切片的长度与容量"><a href="#切片的长度与容量" class="headerlink" title="切片的长度与容量"></a>切片的长度与容量</h3><p>切片的长度：切片所观测到的数据个数</p>
+<p>切片的容量：切片观测到的第一个元素到底层数组最后一个元素的数据个数</p>
+<p>其长度和容量可以分别使用<code>len(s)</code>和<code>cap(s)</code>函数来获取</p>
+<p>切片的零值为<code>nil</code>，表示该切片长度和容量为<code>0</code>，且没有引用任何数组：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这是一个nil切片</span></span><br><span class="line"><span class="keyword">var</span> nilSlice []<span class="type">int</span></span><br></pre></td></tr></table></figure>
+
+<p>对于使用默认值进行切片简要写法的一些理解：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建一个长度为6到int类型数组，并将切片引用到该数组，此时len(a) == cap(a) == 6</span></span><br><span class="line">a := []<span class="type">int</span>&#123;<span class="number">2</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">3</span>&#125;</span><br><span class="line"><span class="comment">//省略下界指定上界相当于直接指定切片的长度，此时容量不会改变</span></span><br><span class="line">a := a[:<span class="number">0</span>]</span><br><span class="line"><span class="comment">//a == &#123;&#125; len(a) == 0 cap(a) == 6</span></span><br><span class="line">a := a[:<span class="number">4</span>]</span><br><span class="line"><span class="comment">//a == &#123;2, 4, 9, 0&#125; len(a) == 4 cap(a) == 6</span></span><br><span class="line"><span class="comment">//省略上界指定下界相当于同时减少切片的长度和容量</span></span><br><span class="line">a := a[<span class="number">2</span>:]</span><br><span class="line"><span class="comment">//a == &#123;9, 0&#125; len(a) == 2 cap(a) == 4</span></span><br></pre></td></tr></table></figure>
+
+<p>在我目前的理解下，长度是可以随意更改的，毕竟只是观测到的数量。而容量与底层数组挂钩，若容量减少，切片想再恢复就只能声明新的切片了</p>
+<h3 id="切片的本质"><a href="#切片的本质" class="headerlink" title="切片的本质"></a>切片的本质</h3><p>一个切片是对一个数组片段的描述</p>
+<p><img src="/Users/henryliao/Documents/GoLang/images/slice_1.png"></p>
+<p>包含了一个指向数组的指针，片段的长度，和片段的最大长度（容量）</p>
+<p>从内存的角度看，容量是从切片指针开始到底层数组最后一个元素的元素数目</p>
+<h4 id="用make创建切片："><a href="#用make创建切片：" class="headerlink" title="用make创建切片："></a>用make创建切片：</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//make会分配一个数组，并将其元素初始化为对应type的零值，返回引用该数组的切片</span></span><br><span class="line">aSlice := <span class="built_in">make</span>([]<span class="keyword">type</span>, <span class="built_in">len</span>, <span class="built_in">cap</span>)</span><br><span class="line"><span class="comment">//make有三个参数，第一个指定数组元素类型，第二个指定切片长度，第三个指定切片容量</span></span><br><span class="line"><span class="comment">//切片容量可以省略，默认为与切片长度相同</span></span><br><span class="line"><span class="comment">//len(a)==5, cap(a)==5</span></span><br><span class="line">a := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="切片的切片"><a href="#切片的切片" class="headerlink" title="切片的切片"></a>切片的切片</h3><p>切片可以包括任何类型，甚至包括其他切片（所以除了切片还有啥类型？）</p>
+<p>which means我们可以创建多维切片</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">board := [][]<span class="type">string</span>&#123;</span><br><span class="line">  []<span class="type">string</span>&#123;<span class="string">&quot;_&quot;</span>, <span class="string">&quot;_&quot;</span>, <span class="string">&quot;_&quot;</span>&#125;,</span><br><span class="line">  []<span class="type">string</span>&#123;<span class="string">&quot;_&quot;</span>, <span class="string">&quot;_&quot;</span>, <span class="string">&quot;_&quot;</span>&#125;,</span><br><span class="line">  []<span class="type">string</span>&#123;<span class="string">&quot;_&quot;</span>, <span class="string">&quot;_&quot;</span>, <span class="string">&quot;_&quot;</span>&#125;,</span><br><span class="line">  <span class="comment">//最后一行的逗号不可省略</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//一个3X3的棋盘</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="向切片末尾追加新元素——append内建函数"><a href="#向切片末尾追加新元素——append内建函数" class="headerlink" title="向切片末尾追加新元素——append内建函数"></a>向切片末尾追加新元素——append内建函数</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//首个参数传入切片</span></span><br><span class="line"><span class="comment">//其后为追加的一个或多个元素</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">append</span><span class="params">(s []<span class="keyword">type</span>, x... <span class="keyword">type</span>)</span></span> []<span class="keyword">type</span></span><br></pre></td></tr></table></figure>
+
+<p>如果追加的元素数量会导致超出切片容量，函数会分配一个更大的数组，并将返回的切片指向这个数组</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">1</span>)</span><br><span class="line"><span class="comment">//a==&#123;0&#125; len(a) == cap(a) == 1</span></span><br><span class="line">a = <span class="built_in">append</span>(a, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line"><span class="comment">//会分配一个长度为4的数组，并将切片指向新的数组</span></span><br><span class="line"><span class="comment">//a==&#123;0, 1, 2, 3&#125; len(a) == cap(a) == 4</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">1</span>)</span><br><span class="line"><span class="comment">//a==&#123;0&#125; len(a) == cap(a) == 1</span></span><br><span class="line">b := <span class="built_in">append</span>(a, <span class="number">1</span>)</span><br><span class="line"><span class="comment">//a==&#123;0&#125; len(a) == cap(a) == 1</span></span><br><span class="line"><span class="comment">//b==&#123;0, 1&#125; len(b) == 2 cap(b) == 2</span></span><br></pre></td></tr></table></figure>
+
+<p>这里，由于追加元素到<code>a</code>切片会导致超出底层数组容量，所以函数分配了长度为<code>2</code>的数组，并将<code>b</code>指向这个新的数组，<code>a</code>及其底层数组不变</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">b = <span class="built_in">append</span>(b, <span class="number">2</span>)</span><br><span class="line"><span class="comment">//b==&#123;0, 1, 2&#125; len(b) == 3 cap(b) == 4</span></span><br><span class="line">c := <span class="built_in">append</span>(b, <span class="number">3</span>)</span><br><span class="line"><span class="comment">//c==&#123;0, 1, 2, 3&#125; len(c) == 4 cap(c) == 4</span></span><br></pre></td></tr></table></figure>
+
+<p>这里，因为<code>c</code>追加的元素在<code>b</code>切片容量内，所以直接追加到<code>b</code>所指向的底层数组，即<code>b</code>和<code>c</code>指向同一个数组</p>
+<p>紧接上面的代码：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">d := <span class="built_in">append</span>(b, <span class="number">4</span>)</span><br><span class="line"><span class="comment">//d==&#123;0, 1, 2, 4&#125; len(d) == 4 cap(d) == 4</span></span><br><span class="line"><span class="comment">//c==&#123;0, 1, 2, 4&#125; len(c) == 4 cap(c) == 4</span></span><br><span class="line"><span class="comment">//b==&#123;0, 1, 2&#125; len(b) == 3 cap(b) == 4</span></span><br></pre></td></tr></table></figure>
+
+<p>由于<code>d</code>是向切片<code>b</code>中追加元素，此时<code>b</code>的长度是3，容量是4，追加后仍在容量内，直接追加到底层数组，但是因为此时<code>c</code>也指向这个数组，所以<code>c[3]</code>也变为4</p>
+<p>但是有这样一个问题：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">1</span>)</span><br><span class="line"><span class="comment">//a==&#123;0&#125; len(a) == cap(a) == 1</span></span><br><span class="line">a = <span class="built_in">append</span>(a, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>，<span class="number">4</span>)</span><br><span class="line"><span class="comment">//此时a==&#123;0, 1, 2, 3， 4&#125; len(a) == 5 cap(a) == 6</span></span><br></pre></td></tr></table></figure>
+
+<p>如果追加四个元素，切片的长度和容量就不同了，经过测试，当切片长度大于3后，若追加后切片长度为奇数，切片的容量总是比长度大一。这应该与append函数的内部数组长度分配有关。基本逻辑是旧<code>cap</code>乘二，细节不再赘述。</p>
+<h3 id="for循环到range形式"><a href="#for循环到range形式" class="headerlink" title="for循环到range形式"></a>for循环到range形式</h3><p>使用range形式可以遍历切片或者映射</p>
+<p>遍历时，每次迭代会返回两个值，第一个为索引，第二个为索引对应的元素</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">pow := []<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">8</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i,v := <span class="keyword">range</span> pow &#123;</span><br><span class="line">  fmt.Printf(<span class="string">&quot;%d, %d\n&quot;</span>, i, v)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出为</span></span><br><span class="line"><span class="comment">//0 1</span></span><br><span class="line"><span class="comment">//1 2</span></span><br><span class="line"><span class="comment">//2 4</span></span><br><span class="line"><span class="comment">//3 8</span></span><br></pre></td></tr></table></figure>
+
+<p>如果只想用到返回值中的一个，用<code>_</code>号填充来忽略它</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">pow := []<span class="type">int</span>&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">8</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i, _ := <span class="keyword">range</span> pow &#123;</span><br><span class="line">  fmt.Printf(<span class="string">&quot;%d\n&quot;</span>, i)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _, v := <span class="keyword">range</span> pow &#123;</span><br><span class="line">  fmt.Printf(<span class="string">&quot;%d\n&quot;</span>, v)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>若只需用到索引，省略第二个变量即可</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i := <span class="keyword">range</span> pow &#123;</span><br><span class="line">  fmt.Printf(<span class="string">&quot;%d\n&quot;</span>, i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="映射（Map）"><a href="#映射（Map）" class="headerlink" title="映射（Map）"></a>映射（Map）</h2><p>映射会将键映射到值，映射到零值为<code>nil</code>，零值映射没有键，也无法添加键</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"><span class="comment">//自定义的结构体，包括Lat、Long两个成员变量</span></span><br><span class="line"><span class="keyword">type</span> Vertex <span class="keyword">struct</span> &#123;</span><br><span class="line">	Lat, Long <span class="type">float64</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//声明一个映射</span></span><br><span class="line"><span class="comment">//键为string类型</span></span><br><span class="line"><span class="comment">//值为Vertex类型</span></span><br><span class="line"><span class="keyword">var</span> m <span class="keyword">map</span>[<span class="type">string</span>]Vertex</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="comment">//make会返回给定类型的map</span></span><br><span class="line">	m = <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="type">string</span>]Vertex)</span><br><span class="line">	m[<span class="string">&quot;Bell Labs&quot;</span>] = Vertex&#123;</span><br><span class="line">		<span class="number">40.68433</span>, <span class="number">-74.39967</span>,</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(m[<span class="string">&quot;Bell Labs&quot;</span>])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>映射的文法与结构体类似，但是必须要有键名：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;fmt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Vertex <span class="keyword">struct</span> &#123;</span><br><span class="line">	Lat, Long <span class="type">float64</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//结构体文法</span></span><br><span class="line"><span class="keyword">var</span> (</span><br><span class="line">  v1 = Vertex&#123;<span class="number">1.0</span>, <span class="number">2.0</span>&#125;</span><br><span class="line">  p1 = &amp;Vertex&#123;<span class="number">2.0</span>, <span class="number">3.0</span>&#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">//映射文法</span></span><br><span class="line"><span class="keyword">var</span> m = <span class="keyword">map</span>[<span class="type">string</span>]Vertex&#123;</span><br><span class="line">	<span class="string">&quot;Bell Labs&quot;</span>: Vertex&#123;</span><br><span class="line">		<span class="number">40.68433</span>, <span class="number">-74.39967</span>,</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="string">&quot;Google&quot;</span>: Vertex&#123;</span><br><span class="line">		<span class="number">37.42202</span>, <span class="number">-122.08408</span>,</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//若顶级类型只是一个类型名，则可以省略？？？</span></span><br><span class="line"><span class="keyword">var</span> m = <span class="keyword">map</span>[<span class="type">string</span>]Vertex&#123;</span><br><span class="line">  <span class="string">&quot;Bell Labs&quot;</span>: &#123;<span class="number">40.68433</span>, <span class="number">-74.39967</span>&#125;,</span><br><span class="line">  <span class="string">&quot;Google&quot;</span>: &#123;<span class="number">37.42202</span>, <span class="number">-122.08408</span>&#125;,</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	fmt.Println(m)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>修改映射</strong></p>
+<p>在映射m中插入或修改元素：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m[key] = elem</span><br></pre></td></tr></table></figure>
+
+<p>读取映射中的元素：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">elem = m[key]</span><br></pre></td></tr></table></figure>
+
+<p>删除元素：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//根据键，从映射m中删除某个元素</span></span><br><span class="line"><span class="built_in">delete</span>(m, key)</span><br></pre></td></tr></table></figure>
+
+<p>检查某个键是否存在：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Go提供了双值检测</span></span><br><span class="line">elem, ok = m[key]</span><br><span class="line"><span class="comment">//若key在m中，则ok为true，否则为false</span></span><br><span class="line"><span class="comment">//若key在m中，elem为对应值，否则为零值</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="函数值"><a href="#函数值" class="headerlink" title="函数值"></a>函数值</h2><p>和Javascript类似，Go也支持将函数当作变量值看待，函数也能作为参数和返回值</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//参数fn为一函数，其有两个float64类型的参数，返回float64类型的数据</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">compute</span><span class="params">(fn <span class="keyword">func</span>(<span class="type">float64</span>, <span class="type">float64</span>)</span></span> <span class="type">float64</span>) <span class="type">float64</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> fn(<span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  <span class="comment">//hypot即为函数名</span></span><br><span class="line">	hypot := <span class="function"><span class="keyword">func</span><span class="params">(x, y <span class="type">float64</span>)</span></span> <span class="type">float64</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> math.Sqrt(x*x + y*y)</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(hypot(<span class="number">5</span>, <span class="number">12</span>))</span><br><span class="line"></span><br><span class="line">	fmt.Println(compute(hypot))</span><br><span class="line">	fmt.Println(compute(math.Pow))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="函数的闭包"><a href="#函数的闭包" class="headerlink" title="函数的闭包"></a>函数的闭包</h2><p>这个爷实在没看懂，后面再说～</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
