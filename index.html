@@ -204,7 +204,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-05-05 16:01:42" itemprop="dateModified" datetime="2022-05-05T16:01:42+08:00">2022-05-05</time>
+      <time title="Modified: 2022-05-05 16:07:07" itemprop="dateModified" datetime="2022-05-05T16:07:07+08:00">2022-05-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -262,7 +262,7 @@
 
 <h2 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h2><p>对于每一次的<code>git commit</code>提交，Git都会保存一个文件的快照以便于恢复</p>
 <p><code>git log</code>命令查看提交历史记录：</p>
-<p><img src="/.com//Git1%5Cgit_1.PNG"></p>
+<p><img src="/git_1.PNG" alt="git_1"></p>
 <p>提交记录按时间顺序，从最近开始。对于每一条提交记录，第一行的序列号是每一次提交的版本号，第二行为提交作者，第三行为提交日期，最后是提交时附加的备注。</p>
 <p>对于最近的一次提交，可以看到<code>(HEAD-&gt; master)</code>的标识，表示当前版本指向最近的一次提交。</p>
 <p><strong>进行版本回退，就需要利用HEAD：</strong></p>
@@ -276,12 +276,12 @@
 
 <p>可以看到，<code>readme</code>中的内容已经回退到上一个版本</p>
 <p>再使用<code>git log</code>查看提交的历史记录：</p>
-<p><img src="/.com//Git1%5Cgit_2.PNG"></p>
+<p><img src="/git_2.PNG" alt="git_2"></p>
 <p>可以看到<code>HEAD</code>指针已经指向上一个版本，同时<code>git log</code>中已经找不到最开始的<code>append GPL</code>版本了</p>
 <p><strong>恢复到新版本：</strong></p>
 <p>要恢复到新版本只能通过版本号</p>
 <p>先使用<code>git reflog</code>查看所记录的每一次命令</p>
-<p><img src="/.com//Git1%5Cgit_3.PNG" alt="git_3"></p>
+<p><img src="/git_3.PNG" alt="git_3"></p>
 <p>可见<code>15dca1c</code>是<code>append GPL</code>的版本号缩写</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard <span class="number">15</span>dca1c</span><br><span class="line"><span class="comment">//即可恢复到最新版本</span></span><br></pre></td></tr></table></figure>
 
