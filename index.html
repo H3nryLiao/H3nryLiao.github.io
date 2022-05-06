@@ -121,16 +121,16 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -159,6 +159,99 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/06/Leetcode0001TwoSum/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Henry Liao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coding and Living.">
+      <meta itemprop="description" content="An unimpressive blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coding and Living.">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/06/Leetcode0001TwoSum/" class="post-title-link" itemprop="url">Leetcode0001 Two Sum</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-05-06 11:40:07 / Modified: 12:03:08" itemprop="dateCreated datePublished" datetime="2022-05-06T11:40:07+08:00">2022-05-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Leetcode/" itemprop="url" rel="index"><span itemprop="name">Leetcode</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个整数数组 <code>nums</code> 和一个整数目标值 <code>target</code>，请你在该数组中找出和为目标值 <code>target</code>  的那两个整数，并返回它们的数组下标。</p>
+<p>你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。</p>
+<p>你可以按任意顺序返回答案。</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>题目即要求从数组中找到两数之和等于<code>target</code>，并按先后顺序返回数组下标</p>
+<p>常规用数组的解法即对每个数组元素遍历数组，若两数之和等于target即返回下标，这样做的时间复杂度为 $O(n^{2})$ </p>
+<p>本题可以使用map将时间复杂度降低到 $O(n)$ ，具体思路为：</p>
+<p>分配一个map，键为数值，值为数值在数组中对应的下标。遍历一次数组，每次迭代中，求出当前数组元素的另一半值 $target - nums[i]$ ，然后在map中查找另一半是否存在，如果存在直接返回两个数的下标，不存在将当前元素和下标存到map中去。</p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">twoSum</span><span class="params">(nums []<span class="type">int</span>, target <span class="type">int</span>)</span></span> []<span class="type">int</span> &#123;</span><br><span class="line">    <span class="comment">//分配一个map存放数组元素和下标</span></span><br><span class="line">	m := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="type">int</span>]<span class="type">int</span>)</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(nums); i++ &#123;</span><br><span class="line">        <span class="comment">//求对应的另一半数字</span></span><br><span class="line">		tmp := target - nums[i]</span><br><span class="line">        <span class="comment">//利用map的双值检测，查找map中是否已经有另一半数字的下标</span></span><br><span class="line">        <span class="keyword">if</span> _, ok := m[tmp]; ok &#123;</span><br><span class="line">            <span class="comment">//如果找到则返回</span></span><br><span class="line">            <span class="keyword">return</span> []<span class="type">int</span>&#123;m[tmp], i&#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//否则保存当前元素到map中</span></span><br><span class="line">        m[nums[i]] = i</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Grumble"><a href="#Grumble" class="headerlink" title="Grumble"></a>Grumble</h2><ol>
+<li>利用map将时间复杂度降低到了 $O(n)$ ，但对应的空间复杂度也上升了</li>
+<li>在返回结果数组时，要注意先后顺序，因为<code>m[tmp]</code>已经在map中，说明<code>tmp</code>比<code>nums[i]</code>在数组中先出现，所以结果数组中<code>m[tmp]</code>在前，<code>i</code>在后</li>
+<li>对Go的<code>if-with-a-short-statement</code>写法还不熟，当前的体会是这种写法常<code>if</code>语句要判定的条件需要简单计算的情景，可以先做运算，再判定结果</li>
+<li><code>_</code>忽略返回值的用法：Go支持多值返回，对于不需要的返回值，用<code>_</code>填充以忽略</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -575,9 +668,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2022-04-19 16:35:31 / Modified: 16:35:03" itemprop="dateCreated datePublished" datetime="2022-04-19T16:35:31+08:00">2022-04-19</time>
+      <time title="Created: 2022-04-19 16:35:31" itemprop="dateCreated datePublished" datetime="2022-04-19T16:35:31+08:00">2022-04-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-05-06 09:35:12" itemprop="dateModified" datetime="2022-05-06T09:35:12+08:00">2022-05-06</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -606,6 +705,15 @@
 <p>需要注意的是，Go的<code>for</code>循环<strong>无需括号</strong>将循环控制语句包含，但必须用{}包括循环语句</p>
 <h3 id="for就是while"><a href="#for就是while" class="headerlink" title="for就是while"></a>for就是while</h3><p>在Go中，若条件控制语句只保留条件表达式，则为<code>while</code>循环</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i &lt; <span class="number">100</span> &#123;</span><br><span class="line">    i += <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在实际应用时，发现这样一个问题：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//此为leetcode001垃圾解法</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">twoSum</span><span class="params">(nums []<span class="type">int</span>, target <span class="type">int</span>)</span></span> []<span class="type">int</span> &#123;</span><br><span class="line">	result := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">2</span>)</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(nums); i++ &#123;</span><br><span class="line">		<span class="keyword">for</span> j := i + <span class="number">1</span>; j &lt; <span class="built_in">len</span>(nums); j++ &#123;</span><br><span class="line">			<span class="keyword">if</span> nums[i]+nums[j] == target &#123;</span><br><span class="line">				result[<span class="number">0</span>] = i</span><br><span class="line">				result[<span class="number">1</span>] = j</span><br><span class="line">				<span class="keyword">return</span> result</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//可以看到，按C语言的语法来说是没有问题的</span></span><br><span class="line"><span class="comment">//但是Go的编译器在最后一行报了missing return的错误</span></span><br></pre></td></tr></table></figure>
+
+<p>出现这种问题的原因在于，Go认为循环有不进入的可能性，而唯一的返回语句在循环中，若没有进入循环函数就没有返回值</p>
+<p>解决方法是在末尾加上<code>return</code>语句即可</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">twoSum</span><span class="params">(nums []<span class="type">int</span>, target <span class="type">int</span>)</span></span> []<span class="type">int</span> &#123;</span><br><span class="line">	result := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">2</span>)</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(nums); i++ &#123;</span><br><span class="line">		<span class="keyword">for</span> j := i + <span class="number">1</span>; j &lt; <span class="built_in">len</span>(nums); j++ &#123;</span><br><span class="line">			<span class="keyword">if</span> nums[i]+nums[j] == target &#123;</span><br><span class="line">				result[<span class="number">0</span>] = i</span><br><span class="line">				result[<span class="number">1</span>] = j</span><br><span class="line">				<span class="keyword">return</span> result</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
 
 <h3 id="无限循环"><a href="#无限循环" class="headerlink" title="无限循环"></a>无限循环</h3><p>若条件控制语句为空，则该循环不会停止</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
