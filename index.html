@@ -121,7 +121,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -168,7 +168,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/06/Leetcode0001TwoSum/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/10/Leetcode0011/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -186,7 +186,454 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/06/Leetcode0001TwoSum/" class="post-title-link" itemprop="url">Leetcode0001 Two Sum</a>
+          <a href="/2022/05/10/Leetcode0011/" class="post-title-link" itemprop="url">Leetcode0011 Container with Most Water</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-05-10 17:38:15 / Modified: 17:40:20" itemprop="dateCreated datePublished" datetime="2022-05-10T17:38:15+08:00">2022-05-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Leetcode/" itemprop="url" rel="index"><span itemprop="name">Leetcode</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个长度为 <code>n</code> 的整数数组 <code>height</code> 。有 <code>n</code> 条垂线，第 <code>i</code> 条线的两个端点是 <code>(i, 0)</code> 和 <code>(i, height[i])</code> 。</p>
+<p>找出其中的两条线，使得它们与 <code>x</code> 轴共同构成的容器可以容纳最多的水。</p>
+<p>返回容器可以储存的最大水量。</p>
+<p>说明：你不能倾斜容器。</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>最开始想到的办法就没什么脑子，暴力去便利整个数组，找到最大水量，时间复杂度就是<code>O(n^2)</code></p>
+<p>但第一次提交后报超时，说明解法是不对的</p>
+<p>思来想去也没找到解法，无奈看了题解</p>
+<p>正确的做法是使用双指针，初始化为指向数组第一个元素和最后一个元素，其意义是<strong>可作为容器边界的所有位置的范围</strong></p>
+<p>每次迭代，都修改高度较小那一边的指针，遍历完整个数组即得到最大水量，时间复杂度为<code>O(n)</code></p>
+<p>但是为什么要修改高度较小的指针？为什么这样遍历一次就能得到最大水量？</p>
+<p>首先理解双指针的含义，双指针包含的范围内，是可作为容器边界的所有位置，初始时<code>head = 0 tail = len(height) - 1</code>表示容器边界在整个数组下标范围内都有可能</p>
+<p>此时双指针对应的面积宽度<code>width = tail - head</code>，水量<code>area = min(height[head], height[tail]) * width</code></p>
+<p>假设height[head] &lt; height[tail]，此时保持head指针不变，向左移动tail指针，宽度width会减小，高度因为要取<code>min(height[head], height[tail&#39;])</code>，所以<code>new height</code>只会小于等于<code>old height</code>，也就是说，双指针中高度较小者指向的元素是当前的短板，会限制水量的增加，如果要找更大的水量，这块“板子”肯定是不行了，要去找更高的板子，所以每次迭代要修改高度较小的指针。</p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">maxArea</span><span class="params">(height []<span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">    <span class="comment">/* head := 0</span></span><br><span class="line"><span class="comment">    tail := len(height) - 1</span></span><br><span class="line"><span class="comment">    max := 0</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">	  max, head, tal := <span class="number">0</span>, <span class="number">0</span>, <span class="built_in">len</span>(height - <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">for</span> head &lt; tail &#123;</span><br><span class="line">        width := tail - head</span><br><span class="line">        high := <span class="number">0</span></span><br><span class="line">        <span class="keyword">if</span> height[head] &lt; height[tail] &#123;</span><br><span class="line">            high = height[head]</span><br><span class="line">            head++</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            high = height[tail]</span><br><span class="line">            tail--</span><br><span class="line">        &#125;</span><br><span class="line">        tmp := high * width</span><br><span class="line">        <span class="keyword">if</span> tmp &gt; max &#123;</span><br><span class="line">            max = tmp</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> max</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Grumble"><a href="#Grumble" class="headerlink" title="Grumble"></a>Grumble</h2><ol>
+<li>这样的问题也应该结合实际，从考虑短板效应入手，短板会导致无论另一块板子长度如何变化，得到的水量始终小于或等于当前水量</li>
+<li>应当仔细读题，题目只要求找到最大水量，而不关心是哪两个下标构成最大水量，导致自己想复杂了</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/10/ATourofGoNote_4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Henry Liao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coding and Living.">
+      <meta itemprop="description" content="An unimpressive blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coding and Living.">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/10/ATourofGoNote_4/" class="post-title-link" itemprop="url">Untitled</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-05-10 17:38:09 / Modified: 17:38:10" itemprop="dateCreated datePublished" datetime="2022-05-10T17:38:09+08:00">2022-05-10</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>Go语言中没有类，但可以为结构体类型定义方法</p>
+<p>方法是一类带<strong>接收者参数</strong>的函数，位于<code>func</code>关键字和函数名之间，表示拥有该函数的结构体类型，比如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一个Vertex结构体</span></span><br><span class="line"><span class="keyword">type</span> Vertex <span class="keyword">struct</span> &#123;</span><br><span class="line">  X, Y <span class="type">float64</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//接收者为Vertex</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(v Vertex)</span></span> Abs() <span class="type">float64</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> math.Sqrt(v.X*v.X + v.Y*v.Y)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//将Abs()函数写作如下形式，功能也完全相同</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Abs</span><span class="params">(v Vertex)</span></span> <span class="type">float64</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> math.Sqrt(v.X*v.X + v.Y*v.Y)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  v := Vertex&#123;<span class="number">3</span>, <span class="number">4</span>&#125;</span><br><span class="line">  <span class="comment">//有接收者参数的函数调用</span></span><br><span class="line">  fmt.Println(v.Abs())</span><br><span class="line">  <span class="comment">//普通函数调用</span></span><br><span class="line">  fmt.Println(Abs(v)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>作为接收者参数的类型定义必须与方法定义在同一包中</strong></p>
+<p>Go不仅能为结构体类型定义方法，也能为非结构体类型定义方法：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> myFloat <span class="type">float64</span></span><br><span class="line"><span class="comment">//为数值类型myFloat定义方法</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f myFloat)</span></span> Abs() &#123;</span><br><span class="line">  <span class="keyword">return</span> f</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//方法调用</span></span><br><span class="line">f.Abs()</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，int、float64等内建类型不能作为接收者</p>
+<h3 id="指针接收者与值接收者"><a href="#指针接收者与值接收者" class="headerlink" title="指针接收者与值接收者"></a>指针接收者与值接收者</h3><p>上面所展示的都是值接收者，以值接收者作为参数的方法是无法对接收者本身进行修改的</p>
+<p>而实际使用中常常需要对接收者的字段进行修改，就需要使用指针接收者：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Vertex <span class="keyword">struct</span> &#123;</span><br><span class="line">	X, Y <span class="type">float64</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Abs()函数以值接收者作为参数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(v Vertex)</span></span> Abs() <span class="type">float64</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> math.Sqrt(v.X*v.X + v.Y*v.Y)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Scale()函数以指针接收者作为参数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(v *Vertex)</span></span> Scale(f <span class="type">float64</span>) &#123;</span><br><span class="line">  <span class="comment">//这里是Go支持的简化写法</span></span><br><span class="line">  <span class="comment">//等价于 *v.X	*v.Y</span></span><br><span class="line">	v.X = v.X * f</span><br><span class="line">	v.Y = v.Y * f</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Scale函数会将结构体的字段扩大f倍</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	v := Vertex&#123;<span class="number">3</span>, <span class="number">4</span>&#125;</span><br><span class="line">  <span class="comment">//执行完后，v.X == 30, v.Y == 40</span></span><br><span class="line">	v.Scale(<span class="number">10</span>)</span><br><span class="line">	fmt.Println(v.Abs())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的例子中，若将<code>Scale</code>函数的指针接收者改为值接收者，便无法对<code>Vertex</code>类型的字段作修改</p>
+<h3 id="方法与指针重定向"><a href="#方法与指针重定向" class="headerlink" title="方法与指针重定向"></a>方法与指针重定向</h3><p>将<code>Scale</code>重写为函数：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Scale</span><span class="params">(v *Vertex, f <span class="type">float64</span>)</span></span> &#123;</span><br><span class="line">  v.X = v.X * f</span><br><span class="line">	v.Y = v.Y * f</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在调用时：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这样是合法的</span></span><br><span class="line">Scale(&amp;v, f)</span><br><span class="line"><span class="comment">//这样是不合法的，因为函数的第一个参数必须是指向Vertex类型的指针</span></span><br><span class="line">Scale(v, f)</span><br></pre></td></tr></table></figure>
+
+<p>但为什么将<code>Scale</code>写作方法时，<code>v.Scale(f)</code>的写法却是合法的呢，明明v是一个结构体变量而非指针</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这是由于Scale方法有一个指针接收者，所以会自动v.Scale(f)解释为(&amp;v).Scale(f)</span></span><br><span class="line"><span class="comment">//同理对于值接收者，也会自动将指针解释为值，比如</span></span><br><span class="line">ptr := &amp;v</span><br><span class="line">ptr.Abs()</span><br></pre></td></tr></table></figure>
+
+<p>感觉这样的写法与结构体指针直接访问字段非常类似</p>
+<h3 id="尽量选择指针作为接收者"><a href="#尽量选择指针作为接收者" class="headerlink" title="尽量选择指针作为接收者"></a>尽量选择指针作为接收者</h3><p>原因有二：</p>
+<ol>
+<li>使用指针接收者能够改变接收者的值</li>
+<li>当结构体很大时，使用指针接收者可以避免每次调用时都复制结构体，更加高效</li>
+</ol>
+<h3 id="对于给定类型，不要混用值接收者和指针接收者"><a href="#对于给定类型，不要混用值接收者和指针接收者" class="headerlink" title="对于给定类型，不要混用值接收者和指针接收者"></a>对于给定类型，不要混用值接收者和指针接收者</h3>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/10/Git3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Henry Liao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coding and Living.">
+      <meta itemprop="description" content="An unimpressive blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coding and Living.">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/10/Git3/" class="post-title-link" itemprop="url">系统学习一下Git_2</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-05-10 17:35:57 / Modified: 17:43:17" itemprop="dateCreated datePublished" datetime="2022-05-10T17:35:57+08:00">2022-05-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="合并分支时解决冲突"><a href="#合并分支时解决冲突" class="headerlink" title="合并分支时解决冲突"></a>合并分支时解决冲突</h2><p>如果不同分支对同一文件作了不同修改，那么在合并这些分支时就会出现冲突——即Git无法确定哪个分支所作的修改是应该保留的</p>
+<p>出现冲突后，Git会在文件中出现冲突的位置作标记，如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Git is a distributed version control system.</span><br><span class="line">Git is <span class="built_in">free</span> software distributed under the GPL.</span><br><span class="line">Git has a mutable index called stage.</span><br><span class="line">Git tracks changes of files.</span><br><span class="line">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span><br><span class="line">Creating a new branch is quick &amp; simple.</span><br><span class="line">=======</span><br><span class="line">Creating a new branch is quick AND simple.</span><br><span class="line">&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature1</span><br></pre></td></tr></table></figure>
+
+<p>要解决冲突只用修改冲突文件并重新提交即可</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add &lt;fileName&gt;</span><br><span class="line">git commit -m <span class="string">&quot;fixed conflict&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>重新提交后，冲突的分支会被自动合并，不要忘记删除分支</p>
+<p>可以使用命令<code>git log --graph</code>查看分支的合并情况</p>
+<h2 id="分支管理策略"><a href="#分支管理策略" class="headerlink" title="分支管理策略"></a>分支管理策略</h2><p>在合并分支时，Git默认使用<code>Fast forward</code>模式，即将<code>master</code>分支直接指向其他分支的提交</p>
+<p>在这种模式下，删除分支后会丢掉分支信息</p>
+<p>如果禁用Fast forward模式，Git在合并时会保留分支信息</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge --no-ff -m <span class="string">&quot;merge with no-ff&quot;</span> dev</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>Fast forward</code>模式，看不出来曾经做过合并，时间线上不会有<code>ff</code>模式合并的分支</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Fast forward模式</span></span><br><span class="line">before:</span><br><span class="line">	node1--node2--node3</span><br><span class="line">        master = &amp;node2</span><br><span class="line">        dev = &amp;node3</span><br><span class="line">after:</span><br><span class="line">	node1--node2--node3</span><br><span class="line">        master = &amp;node3</span><br><span class="line">        dev = &amp;node3</span><br><span class="line">git branch -d dev:</span><br><span class="line">	node1--node2--node3</span><br><span class="line">        master = &amp;node3</span><br><span class="line">        dev = null</span><br><span class="line"><span class="comment">//no-ff模式</span></span><br><span class="line">before:</span><br><span class="line">	node1--node2--node3</span><br><span class="line">        master = &amp;node2</span><br><span class="line">        dev = &amp;node3</span><br><span class="line">after:</span><br><span class="line">	node1--node2--node4</span><br><span class="line">			|---node3--|        </span><br><span class="line">        master = &amp;node4</span><br><span class="line">        dev = &amp;node3      </span><br></pre></td></tr></table></figure>
+
+<p><strong>有个疑问，<code>no-ff</code>模式合并后是否需要删除<code>dev</code>分支？</strong></p>
+<p>经过测试，删除<code>dev</code>分支后，时间线仍保留了分支合并时的节点以及版本号</p>
+<h2 id="在分支中修复Bug"><a href="#在分支中修复Bug" class="headerlink" title="在分支中修复Bug"></a>在分支中修复Bug</h2><p>假设这样一个场景：当前正在<code>dev</code>分支上工作，进行到一半必须紧急修复<code>master</code>分支上的某一个<code>bug</code></p>
+<p>应该这样做：</p>
+<ol>
+<li><p>保存未做完的工作</p>
+<p>使用<code>git stash</code>命令暂存工作现场，这样使用<code>git status</code>查看工作区就没有需要提交的修改</p>
+</li>
+<li><p>修复<code>master</code>分支的Bug</p>
+<p>在<code>master</code>分支创建临时分支，比如创建一个<code>fixbug</code>分支，并修复Bug后合并</p>
+</li>
+<li><p>恢复<code>dev</code>分支未完成的工作</p>
+<p>使用命令<code>git stash list</code>查看暂存的数据列表，<strong>在对应分支下</strong>使用<code>git stash pop</code>恢复暂存的内容，同时将其从<code>stash</code>区中删除</p>
+<p>若<code>stash list</code>中有多条记录，需要恢复指定<code>stash</code>时，使用命令<code>git stash pop stash@&#123;&lt;index&gt;&#125;</code></p>
+</li>
+</ol>
+<p><strong>需要注意：</strong>一是必须在暂存记录对应的分支下恢复，否则恢复后无法切换分支</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="keyword">switch</span> dev2</span><br><span class="line">error: Your local changes to the following files would be overwritten by checkout:</span><br><span class="line">        readme.txt</span><br><span class="line">Please commit your changes or stash them before you <span class="keyword">switch</span> branches.</span><br><span class="line">Aborting</span><br><span class="line"><span class="comment">//会报这样的错</span></span><br></pre></td></tr></table></figure>
+
+<p>二是删除分支后，对应<code>stash</code>中的数据不会被删除，需要手动<code>git stash drop stash@&#123;&lt;index&gt;&#125;</code></p>
+<p><strong>对于上面的场景，<code>dev</code>分支来自<code>master</code>分支，那么<code>master</code>分支中存在的bug也存在于<code>dev</code>分支中</strong></p>
+<p>如何快速的修复<code>dev</code>分支中的bug？使用<code>git cherry-pick</code>命令</p>
+<p>将之前临时分支提交的版本号作为该命令的参数即可</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/07/Git2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Henry Liao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coding and Living.">
+      <meta itemprop="description" content="An unimpressive blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coding and Living.">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/07/Git2/" class="post-title-link" itemprop="url">系统学习一下Git_2</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-05-07 09:54:50" itemprop="dateCreated datePublished" datetime="2022-05-07T09:54:50+08:00">2022-05-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-05-10 17:43:00" itemprop="dateModified" datetime="2022-05-10T17:43:00+08:00">2022-05-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="关联本地仓库与远程仓库"><a href="#关联本地仓库与远程仓库" class="headerlink" title="关联本地仓库与远程仓库"></a>关联本地仓库与远程仓库</h2><p>首先在Github上创建一个新仓库，如<code>test</code></p>
+<p>随后在本地创建一个新的Git仓库，仓库名可以不与远程仓库相同，如<code>tset</code></p>
+<p>使用命令：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@github.com:H3nryLiao/test.git</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>origin</code>是所取的远程库名字</p>
+<p>即可将远程<code>test</code>仓库与本地<code>tset</code>仓库关联，从而能将本地仓库的内容推送到相关联的远程仓库中</p>
+<p>需要注意的是，必须要将本地目录变为仓库才能进行关联，即需要先<code>git init</code>才能<code>git remote</code></p>
+<h2 id="将本地内容推送到远程库"><a href="#将本地内容推送到远程库" class="headerlink" title="将本地内容推送到远程库"></a>将本地内容推送到远程库</h2><p>使用命令：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin master</span><br></pre></td></tr></table></figure>
+
+<p>表示将本地当前分支的<code>master</code>推送到<code>origin</code>远程库中的<code>master</code>分支中</p>
+<p><code>-u</code>参数表示本次推送时，将本地<code>master</code>分支与远程<code>master</code>分支进行关联,就能简化命令<code>git push origin master</code></p>
+<h2 id="解除关联"><a href="#解除关联" class="headerlink" title="解除关联"></a>解除关联</h2><p>使用命令：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote rm origin</span><br></pre></td></tr></table></figure>
+
+<p>利用关联时所取的名称解绑，要物理上删除远程库，则需登录到Github操作</p>
+<h2 id="从远程库克隆"><a href="#从远程库克隆" class="headerlink" title="从远程库克隆"></a>从远程库克隆</h2><p>使用命令：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:H3nryLiao/gitskills.git</span><br></pre></td></tr></table></figure>
+
+<p>知道远程仓库的地址即可克隆到本地</p>
+<h2 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h2><h3 id="创建与合并分支"><a href="#创建与合并分支" class="headerlink" title="创建与合并分支"></a>创建与合并分支</h3><p>从底层的实现来理解Git分支的概念就很轻松：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">每一次提交，Git都会将暂存区中的修改保存到工作区，将一次提交的修改理解为一个数据解构Node</span><br><span class="line">假如这是一条master分支：    </span><br><span class="line">Node1--Node2--Node3--Node4</span><br><span class="line">表示一共进行了四次提交，对工作区进行了四次修改，master分支即master指针指向最近的提交，ptr_master = &amp;Node4</span><br><span class="line">加入我们还有一个dev分支，那么就是dev指针指向某个Node，比如ptr_dev = &amp;Node4</span><br><span class="line">访问不同分支，就需要用到之前说到的Head指针，Head指向分支，即ptr_HEAD = &amp;ptr_dev</span><br></pre></td></tr></table></figure>
+
+<p>假如在<code>dev</code>分支中进行了一次修改<code>Node5</code>，那么<code>ptr_dev = &amp;Node5 ptr_HEAD = &amp;ptr_dev  </code>，而<code>ptr_master</code>仍然指向<code>Node4</code></p>
+<ul>
+<li><p>创建分支</p>
+<p>使用命令：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch dev</span><br></pre></td></tr></table></figure>
+
+<p><strong>需要注意：</strong>创建分支命令是根据当前所在分支进行创建，所当前在<code>master</code>分支，即根据<code>master</code>分支的最新提交创建分支</p>
+<p>切换到<code>dev</code>分支使用命令：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout dev</span><br></pre></td></tr></table></figure>
+
+<p>也可以用简略写法：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b dev</span><br></pre></td></tr></table></figure>
+
+<p>查看仓库中的所有分支：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git branch</span><br><span class="line">    * dev</span><br><span class="line">      master</span><br><span class="line"><span class="comment">//当前分支前以*号标注</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>合并分支</p>
+<p>使用命令：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge dev</span><br></pre></td></tr></table></figure>
+
+<p>提倡在合并完成后，删除已合并的分支：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d dev</span><br></pre></td></tr></table></figure>
+
+<p><strong>无法删除当前所在分支！</strong>需要切换到其他分支才能进行删除操作</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/06/Leetcode0001/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Henry Liao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coding and Living.">
+      <meta itemprop="description" content="An unimpressive blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Coding and Living.">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/05/06/Leetcode0001/" class="post-title-link" itemprop="url">Leetcode0001 Two Sum</a>
         </h2>
 
         <div class="post-meta-container">

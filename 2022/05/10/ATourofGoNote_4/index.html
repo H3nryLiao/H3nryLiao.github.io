@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="方法Go语言中没有类，但可以为结构体类型定义方法 方法是一类带接收者参数的函数，位于func关键字和函数名之间，表示拥有该函数的结构体类型，比如： 12345678910111213141516171819&#x2F;&#x2F;定义一个Vertex结构体type Vertex struct &amp;#123;  X, Y float64&amp;#125;&#x2F;&#x2F;接收者为Vertexfunc (v Vertex) Abs() flo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Coding and Living.">
+<meta property="og:url" content="http://example.com/2022/05/10/ATourofGoNote_4/index.html">
+<meta property="og:site_name" content="Coding and Living.">
+<meta property="og:description" content="方法Go语言中没有类，但可以为结构体类型定义方法 方法是一类带接收者参数的函数，位于func关键字和函数名之间，表示拥有该函数的结构体类型，比如： 12345678910111213141516171819&#x2F;&#x2F;定义一个Vertex结构体type Vertex struct &amp;#123;  X, Y float64&amp;#125;&#x2F;&#x2F;接收者为Vertexfunc (v Vertex) Abs() flo">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-05-10T09:38:09.908Z">
+<meta property="article:modified_time" content="2022-05-10T09:38:10.835Z">
+<meta property="article:author" content="Henry Liao">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2022/05/10/ATourofGoNote_4/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/05/10/ATourofGoNote_4/","path":"2022/05/10/ATourofGoNote_4/","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title> | Coding and Living.</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coding and Living.</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E6%8E%A5%E6%94%B6%E8%80%85%E4%B8%8E%E5%80%BC%E6%8E%A5%E6%94%B6%E8%80%85"><span class="nav-number">1.1.</span> <span class="nav-text">指针接收者与值接收者</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%8E%E6%8C%87%E9%92%88%E9%87%8D%E5%AE%9A%E5%90%91"><span class="nav-number">1.2.</span> <span class="nav-text">方法与指针重定向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%BD%E9%87%8F%E9%80%89%E6%8B%A9%E6%8C%87%E9%92%88%E4%BD%9C%E4%B8%BA%E6%8E%A5%E6%94%B6%E8%80%85"><span class="nav-number">1.3.</span> <span class="nav-text">尽量选择指针作为接收者</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8E%E7%BB%99%E5%AE%9A%E7%B1%BB%E5%9E%8B%EF%BC%8C%E4%B8%8D%E8%A6%81%E6%B7%B7%E7%94%A8%E5%80%BC%E6%8E%A5%E6%94%B6%E8%80%85%E5%92%8C%E6%8C%87%E9%92%88%E6%8E%A5%E6%94%B6%E8%80%85"><span class="nav-number">1.4.</span> <span class="nav-text">对于给定类型，不要混用值接收者和指针接收者</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Henry Liao"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Henry Liao</p>
+  <div class="site-description" itemprop="description">An unimpressive blog</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/10/ATourofGoNote_4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Henry Liao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coding and Living.">
+      <meta itemprop="description" content="An unimpressive blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Coding and Living.">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-05-10 17:38:09 / Modified: 17:38:10" itemprop="dateCreated datePublished" datetime="2022-05-10T17:38:09+08:00">2022-05-10</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>Go语言中没有类，但可以为结构体类型定义方法</p>
+<p>方法是一类带<strong>接收者参数</strong>的函数，位于<code>func</code>关键字和函数名之间，表示拥有该函数的结构体类型，比如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一个Vertex结构体</span></span><br><span class="line"><span class="keyword">type</span> Vertex <span class="keyword">struct</span> &#123;</span><br><span class="line">  X, Y <span class="type">float64</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//接收者为Vertex</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(v Vertex)</span></span> Abs() <span class="type">float64</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> math.Sqrt(v.X*v.X + v.Y*v.Y)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//将Abs()函数写作如下形式，功能也完全相同</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Abs</span><span class="params">(v Vertex)</span></span> <span class="type">float64</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> math.Sqrt(v.X*v.X + v.Y*v.Y)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">  v := Vertex&#123;<span class="number">3</span>, <span class="number">4</span>&#125;</span><br><span class="line">  <span class="comment">//有接收者参数的函数调用</span></span><br><span class="line">  fmt.Println(v.Abs())</span><br><span class="line">  <span class="comment">//普通函数调用</span></span><br><span class="line">  fmt.Println(Abs(v)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>作为接收者参数的类型定义必须与方法定义在同一包中</strong></p>
+<p>Go不仅能为结构体类型定义方法，也能为非结构体类型定义方法：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> myFloat <span class="type">float64</span></span><br><span class="line"><span class="comment">//为数值类型myFloat定义方法</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f myFloat)</span></span> Abs() &#123;</span><br><span class="line">  <span class="keyword">return</span> f</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//方法调用</span></span><br><span class="line">f.Abs()</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，int、float64等内建类型不能作为接收者</p>
+<h3 id="指针接收者与值接收者"><a href="#指针接收者与值接收者" class="headerlink" title="指针接收者与值接收者"></a>指针接收者与值接收者</h3><p>上面所展示的都是值接收者，以值接收者作为参数的方法是无法对接收者本身进行修改的</p>
+<p>而实际使用中常常需要对接收者的字段进行修改，就需要使用指针接收者：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Vertex <span class="keyword">struct</span> &#123;</span><br><span class="line">	X, Y <span class="type">float64</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Abs()函数以值接收者作为参数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(v Vertex)</span></span> Abs() <span class="type">float64</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> math.Sqrt(v.X*v.X + v.Y*v.Y)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Scale()函数以指针接收者作为参数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(v *Vertex)</span></span> Scale(f <span class="type">float64</span>) &#123;</span><br><span class="line">  <span class="comment">//这里是Go支持的简化写法</span></span><br><span class="line">  <span class="comment">//等价于 *v.X	*v.Y</span></span><br><span class="line">	v.X = v.X * f</span><br><span class="line">	v.Y = v.Y * f</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Scale函数会将结构体的字段扩大f倍</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	v := Vertex&#123;<span class="number">3</span>, <span class="number">4</span>&#125;</span><br><span class="line">  <span class="comment">//执行完后，v.X == 30, v.Y == 40</span></span><br><span class="line">	v.Scale(<span class="number">10</span>)</span><br><span class="line">	fmt.Println(v.Abs())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的例子中，若将<code>Scale</code>函数的指针接收者改为值接收者，便无法对<code>Vertex</code>类型的字段作修改</p>
+<h3 id="方法与指针重定向"><a href="#方法与指针重定向" class="headerlink" title="方法与指针重定向"></a>方法与指针重定向</h3><p>将<code>Scale</code>重写为函数：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Scale</span><span class="params">(v *Vertex, f <span class="type">float64</span>)</span></span> &#123;</span><br><span class="line">  v.X = v.X * f</span><br><span class="line">	v.Y = v.Y * f</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在调用时：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这样是合法的</span></span><br><span class="line">Scale(&amp;v, f)</span><br><span class="line"><span class="comment">//这样是不合法的，因为函数的第一个参数必须是指向Vertex类型的指针</span></span><br><span class="line">Scale(v, f)</span><br></pre></td></tr></table></figure>
+
+<p>但为什么将<code>Scale</code>写作方法时，<code>v.Scale(f)</code>的写法却是合法的呢，明明v是一个结构体变量而非指针</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这是由于Scale方法有一个指针接收者，所以会自动v.Scale(f)解释为(&amp;v).Scale(f)</span></span><br><span class="line"><span class="comment">//同理对于值接收者，也会自动将指针解释为值，比如</span></span><br><span class="line">ptr := &amp;v</span><br><span class="line">ptr.Abs()</span><br></pre></td></tr></table></figure>
+
+<p>感觉这样的写法与结构体指针直接访问字段非常类似</p>
+<h3 id="尽量选择指针作为接收者"><a href="#尽量选择指针作为接收者" class="headerlink" title="尽量选择指针作为接收者"></a>尽量选择指针作为接收者</h3><p>原因有二：</p>
+<ol>
+<li>使用指针接收者能够改变接收者的值</li>
+<li>当结构体很大时，使用指针接收者可以避免每次调用时都复制结构体，更加高效</li>
+</ol>
+<h3 id="对于给定类型，不要混用值接收者和指针接收者"><a href="#对于给定类型，不要混用值接收者和指针接收者" class="headerlink" title="对于给定类型，不要混用值接收者和指针接收者"></a>对于给定类型，不要混用值接收者和指针接收者</h3>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/05/10/Git3/" rel="prev" title="系统学习一下Git_2">
+                  <i class="fa fa-chevron-left"></i> 系统学习一下Git_2
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/05/10/Leetcode0011/" rel="next" title="Leetcode0011 Container with Most Water">
+                  Leetcode0011 Container with Most Water <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Henry Liao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

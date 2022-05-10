@@ -21,28 +21,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="题目描述给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出和为目标值 target  的那两个整数，并返回它们的数组下标。 你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。 你可以按任意顺序返回答案。 题解题目即要求从数组中找到两数之和等于target，并按先后顺序返回数组下标 常规用数组的解法即对每个数组元素遍历数组，若两数之和等于ta">
+    <meta name="description" content="题目描述给定一个长度为 n 的整数数组 height 。有 n 条垂线，第 i 条线的两个端点是 (i, 0) 和 (i, height[i]) 。 找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。 返回容器可以储存的最大水量。 说明：你不能倾斜容器。 题解最开始想到的办法就没什么脑子，暴力去便利整个数组，找到最大水量，时间复杂度就是O(n^2) 但第一次提交后报超时，说明解法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leetcode0001 Two Sum">
-<meta property="og:url" content="http://example.com/2022/05/06/Leetcode0001TwoSum/index.html">
+<meta property="og:title" content="Leetcode0011 Container with Most Water">
+<meta property="og:url" content="http://example.com/2022/05/10/Leetcode0011/index.html">
 <meta property="og:site_name" content="Coding and Living.">
-<meta property="og:description" content="题目描述给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出和为目标值 target  的那两个整数，并返回它们的数组下标。 你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。 你可以按任意顺序返回答案。 题解题目即要求从数组中找到两数之和等于target，并按先后顺序返回数组下标 常规用数组的解法即对每个数组元素遍历数组，若两数之和等于ta">
+<meta property="og:description" content="题目描述给定一个长度为 n 的整数数组 height 。有 n 条垂线，第 i 条线的两个端点是 (i, 0) 和 (i, height[i]) 。 找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。 返回容器可以储存的最大水量。 说明：你不能倾斜容器。 题解最开始想到的办法就没什么脑子，暴力去便利整个数组，找到最大水量，时间复杂度就是O(n^2) 但第一次提交后报超时，说明解法">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-05-06T03:40:07.009Z">
-<meta property="article:modified_time" content="2022-05-06T04:03:08.831Z">
+<meta property="article:published_time" content="2022-05-10T09:38:15.935Z">
+<meta property="article:modified_time" content="2022-05-10T09:40:20.923Z">
 <meta property="article:author" content="Henry Liao">
 <meta property="article:tag" content="Leetcode">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2022/05/06/Leetcode0001TwoSum/">
+<link rel="canonical" href="http://example.com/2022/05/10/Leetcode0011/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/05/06/Leetcode0001TwoSum/","path":"2022/05/06/Leetcode0001TwoSum/","title":"Leetcode0001 Two Sum"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/05/10/Leetcode0011/","path":"2022/05/10/Leetcode0011/","title":"Leetcode0011 Container with Most Water"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Leetcode0001 Two Sum | Coding and Living.</title>
+<title>Leetcode0011 Container with Most Water | Coding and Living.</title>
   
 
 
@@ -125,7 +125,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/06/Leetcode0001TwoSum/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/10/Leetcode0011/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -186,12 +186,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Leetcode0001 Two Sum | Coding and Living.">
+      <meta itemprop="name" content="Leetcode0011 Container with Most Water | Coding and Living.">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Leetcode0001 Two Sum
+          Leetcode0011 Container with Most Water
         </h1>
 
         <div class="post-meta-container">
@@ -203,7 +203,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-05-06 11:40:07 / Modified: 12:03:08" itemprop="dateCreated datePublished" datetime="2022-05-06T11:40:07+08:00">2022-05-06</time>
+      <time title="Created: 2022-05-10 17:38:15 / Modified: 17:40:20" itemprop="dateCreated datePublished" datetime="2022-05-10T17:38:15+08:00">2022-05-10</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -225,20 +225,24 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个整数数组 <code>nums</code> 和一个整数目标值 <code>target</code>，请你在该数组中找出和为目标值 <code>target</code>  的那两个整数，并返回它们的数组下标。</p>
-<p>你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。</p>
-<p>你可以按任意顺序返回答案。</p>
-<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>题目即要求从数组中找到两数之和等于<code>target</code>，并按先后顺序返回数组下标</p>
-<p>常规用数组的解法即对每个数组元素遍历数组，若两数之和等于target即返回下标，这样做的时间复杂度为 $O(n^{2})$ </p>
-<p>本题可以使用map将时间复杂度降低到 $O(n)$ ，具体思路为：</p>
-<p>分配一个map，键为数值，值为数值在数组中对应的下标。遍历一次数组，每次迭代中，求出当前数组元素的另一半值 $target - nums[i]$ ，然后在map中查找另一半是否存在，如果存在直接返回两个数的下标，不存在将当前元素和下标存到map中去。</p>
-<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">twoSum</span><span class="params">(nums []<span class="type">int</span>, target <span class="type">int</span>)</span></span> []<span class="type">int</span> &#123;</span><br><span class="line">    <span class="comment">//分配一个map存放数组元素和下标</span></span><br><span class="line">	m := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="type">int</span>]<span class="type">int</span>)</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(nums); i++ &#123;</span><br><span class="line">        <span class="comment">//求对应的另一半数字</span></span><br><span class="line">		tmp := target - nums[i]</span><br><span class="line">        <span class="comment">//利用map的双值检测，查找map中是否已经有另一半数字的下标</span></span><br><span class="line">        <span class="keyword">if</span> _, ok := m[tmp]; ok &#123;</span><br><span class="line">            <span class="comment">//如果找到则返回</span></span><br><span class="line">            <span class="keyword">return</span> []<span class="type">int</span>&#123;m[tmp], i&#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//否则保存当前元素到map中</span></span><br><span class="line">        m[nums[i]] = i</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给定一个长度为 <code>n</code> 的整数数组 <code>height</code> 。有 <code>n</code> 条垂线，第 <code>i</code> 条线的两个端点是 <code>(i, 0)</code> 和 <code>(i, height[i])</code> 。</p>
+<p>找出其中的两条线，使得它们与 <code>x</code> 轴共同构成的容器可以容纳最多的水。</p>
+<p>返回容器可以储存的最大水量。</p>
+<p>说明：你不能倾斜容器。</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>最开始想到的办法就没什么脑子，暴力去便利整个数组，找到最大水量，时间复杂度就是<code>O(n^2)</code></p>
+<p>但第一次提交后报超时，说明解法是不对的</p>
+<p>思来想去也没找到解法，无奈看了题解</p>
+<p>正确的做法是使用双指针，初始化为指向数组第一个元素和最后一个元素，其意义是<strong>可作为容器边界的所有位置的范围</strong></p>
+<p>每次迭代，都修改高度较小那一边的指针，遍历完整个数组即得到最大水量，时间复杂度为<code>O(n)</code></p>
+<p>但是为什么要修改高度较小的指针？为什么这样遍历一次就能得到最大水量？</p>
+<p>首先理解双指针的含义，双指针包含的范围内，是可作为容器边界的所有位置，初始时<code>head = 0 tail = len(height) - 1</code>表示容器边界在整个数组下标范围内都有可能</p>
+<p>此时双指针对应的面积宽度<code>width = tail - head</code>，水量<code>area = min(height[head], height[tail]) * width</code></p>
+<p>假设height[head] &lt; height[tail]，此时保持head指针不变，向左移动tail指针，宽度width会减小，高度因为要取<code>min(height[head], height[tail&#39;])</code>，所以<code>new height</code>只会小于等于<code>old height</code>，也就是说，双指针中高度较小者指向的元素是当前的短板，会限制水量的增加，如果要找更大的水量，这块“板子”肯定是不行了，要去找更高的板子，所以每次迭代要修改高度较小的指针。</p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">maxArea</span><span class="params">(height []<span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">    <span class="comment">/* head := 0</span></span><br><span class="line"><span class="comment">    tail := len(height) - 1</span></span><br><span class="line"><span class="comment">    max := 0</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">	  max, head, tal := <span class="number">0</span>, <span class="number">0</span>, <span class="built_in">len</span>(height - <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">for</span> head &lt; tail &#123;</span><br><span class="line">        width := tail - head</span><br><span class="line">        high := <span class="number">0</span></span><br><span class="line">        <span class="keyword">if</span> height[head] &lt; height[tail] &#123;</span><br><span class="line">            high = height[head]</span><br><span class="line">            head++</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            high = height[tail]</span><br><span class="line">            tail--</span><br><span class="line">        &#125;</span><br><span class="line">        tmp := high * width</span><br><span class="line">        <span class="keyword">if</span> tmp &gt; max &#123;</span><br><span class="line">            max = tmp</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> max</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="Grumble"><a href="#Grumble" class="headerlink" title="Grumble"></a>Grumble</h2><ol>
-<li>利用map将时间复杂度降低到了 $O(n)$ ，但对应的空间复杂度也上升了</li>
-<li>在返回结果数组时，要注意先后顺序，因为<code>m[tmp]</code>已经在map中，说明<code>tmp</code>比<code>nums[i]</code>在数组中先出现，所以结果数组中<code>m[tmp]</code>在前，<code>i</code>在后</li>
-<li>对Go的<code>if-with-a-short-statement</code>写法还不熟，当前的体会是这种写法常<code>if</code>语句要判定的条件需要简单计算的情景，可以先做运算，再判定结果</li>
-<li><code>_</code>忽略返回值的用法：Go支持多值返回，对于不需要的返回值，用<code>_</code>填充以忽略</li>
+<li>这样的问题也应该结合实际，从考虑短板效应入手，短板会导致无论另一块板子长度如何变化，得到的水量始终小于或等于当前水量</li>
+<li>应当仔细读题，题目只要求找到最大水量，而不关心是哪两个下标构成最大水量，导致自己想复杂了</li>
 </ol>
 
     </div>
@@ -256,8 +260,8 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/05/05/ATourofGoNote_3/" rel="prev" title="A Tour of Go笔记——结构体、切片、映射和函数值">
-                  <i class="fa fa-chevron-left"></i> A Tour of Go笔记——结构体、切片、映射和函数值
+                <a href="/2022/05/10/ATourofGoNote_4/" rel="prev" title="">
+                  <i class="fa fa-chevron-left"></i> 
                 </a>
             </div>
             <div class="post-nav-item">
