@@ -283,7 +283,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/05/10/ATourofGoNote_4/" class="post-title-link" itemprop="url">Untitled</a>
+          <a href="/2022/05/10/ATourofGoNote_4/" class="post-title-link" itemprop="url">A Tour of Go笔记——方法与接口</a>
         </h2>
 
         <div class="post-meta-container">
@@ -295,7 +295,16 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-05-10 17:38:09 / Modified: 17:38:10" itemprop="dateCreated datePublished" datetime="2022-05-10T17:38:09+08:00">2022-05-10</time>
+      <time title="Created: 2022-05-10 17:38:09 / Modified: 21:36:23" itemprop="dateCreated datePublished" datetime="2022-05-10T17:38:09+08:00">2022-05-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
+        </span>
     </span>
 
   
@@ -316,14 +325,14 @@
 <p>Go不仅能为结构体类型定义方法，也能为非结构体类型定义方法：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> myFloat <span class="type">float64</span></span><br><span class="line"><span class="comment">//为数值类型myFloat定义方法</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(f myFloat)</span></span> Abs() &#123;</span><br><span class="line">  <span class="keyword">return</span> f</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//方法调用</span></span><br><span class="line">f.Abs()</span><br></pre></td></tr></table></figure>
 
-<p>需要注意的是，int、float64等内建类型不能作为接收者</p>
+<p>需要注意的是，<code>int</code>、<code>float64</code>等内建类型不能作为接收者</p>
 <h3 id="指针接收者与值接收者"><a href="#指针接收者与值接收者" class="headerlink" title="指针接收者与值接收者"></a>指针接收者与值接收者</h3><p>上面所展示的都是值接收者，以值接收者作为参数的方法是无法对接收者本身进行修改的</p>
 <p>而实际使用中常常需要对接收者的字段进行修改，就需要使用指针接收者：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Vertex <span class="keyword">struct</span> &#123;</span><br><span class="line">	X, Y <span class="type">float64</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Abs()函数以值接收者作为参数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(v Vertex)</span></span> Abs() <span class="type">float64</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> math.Sqrt(v.X*v.X + v.Y*v.Y)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Scale()函数以指针接收者作为参数</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(v *Vertex)</span></span> Scale(f <span class="type">float64</span>) &#123;</span><br><span class="line">  <span class="comment">//这里是Go支持的简化写法</span></span><br><span class="line">  <span class="comment">//等价于 *v.X	*v.Y</span></span><br><span class="line">	v.X = v.X * f</span><br><span class="line">	v.Y = v.Y * f</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Scale函数会将结构体的字段扩大f倍</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	v := Vertex&#123;<span class="number">3</span>, <span class="number">4</span>&#125;</span><br><span class="line">  <span class="comment">//执行完后，v.X == 30, v.Y == 40</span></span><br><span class="line">	v.Scale(<span class="number">10</span>)</span><br><span class="line">	fmt.Println(v.Abs())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>上面的例子中，若将<code>Scale</code>函数的指针接收者改为值接收者，便无法对<code>Vertex</code>类型的字段作修改</p>
 <h3 id="方法与指针重定向"><a href="#方法与指针重定向" class="headerlink" title="方法与指针重定向"></a>方法与指针重定向</h3><p>将<code>Scale</code>重写为函数：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Scale</span><span class="params">(v *Vertex, f <span class="type">float64</span>)</span></span> &#123;</span><br><span class="line">  v.X = v.X * f</span><br><span class="line">	v.Y = v.Y * f</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Scale</span><span class="params">(v *Vertex, f <span class="type">float64</span>)</span></span> &#123;</span><br><span class="line">    v.X = v.X * f</span><br><span class="line">    v.Y = v.Y * f</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>在调用时：</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这样是合法的</span></span><br><span class="line">Scale(&amp;v, f)</span><br><span class="line"><span class="comment">//这样是不合法的，因为函数的第一个参数必须是指向Vertex类型的指针</span></span><br><span class="line">Scale(v, f)</span><br></pre></td></tr></table></figure>
@@ -337,7 +346,8 @@
 <li>使用指针接收者能够改变接收者的值</li>
 <li>当结构体很大时，使用指针接收者可以避免每次调用时都复制结构体，更加高效</li>
 </ol>
-<h3 id="对于给定类型，不要混用值接收者和指针接收者"><a href="#对于给定类型，不要混用值接收者和指针接收者" class="headerlink" title="对于给定类型，不要混用值接收者和指针接收者"></a>对于给定类型，不要混用值接收者和指针接收者</h3>
+<h3 id="对于给定类型，不要混用值接收者和指针接收者"><a href="#对于给定类型，不要混用值接收者和指针接收者" class="headerlink" title="对于给定类型，不要混用值接收者和指针接收者"></a>对于给定类型，不要混用值接收者和指针接收者</h3><h2 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h2><p>略，等爷Java学好了再来</p>
+
       
     </div>
 
