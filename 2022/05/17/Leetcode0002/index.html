@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="题目描述给你两个非空的链表，表示两个非负的整数。它们每位数字都是按照逆序的方式存储的，并且每个节点只能存储一位数字。 请你将两个数相加，并以相同形式返回一个表示和的链表。 你可以假设除了数字 0 之外，这两个数都不会以 0 开头。 题解题目已经明确提示了使用单链表，逆序存储也为我们解决了数字相加的对齐问题，降低了求解的难度 主要的注意点就在于：  进位问题 某一链表扫完而另一个链表有剩余的情况 最">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Leetcode0002 两数相加">
+<meta property="og:url" content="http://example.com/2022/05/17/Leetcode0002/index.html">
+<meta property="og:site_name" content="Coding and Living.">
+<meta property="og:description" content="题目描述给你两个非空的链表，表示两个非负的整数。它们每位数字都是按照逆序的方式存储的，并且每个节点只能存储一位数字。 请你将两个数相加，并以相同形式返回一个表示和的链表。 你可以假设除了数字 0 之外，这两个数都不会以 0 开头。 题解题目已经明确提示了使用单链表，逆序存储也为我们解决了数字相加的对齐问题，降低了求解的难度 主要的注意点就在于：  进位问题 某一链表扫完而另一个链表有剩余的情况 最">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-05-17T08:04:56.981Z">
+<meta property="article:modified_time" content="2022-05-17T08:07:25.518Z">
+<meta property="article:author" content="Henry Liao">
+<meta property="article:tag" content="Leetcode">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2022/05/17/Leetcode0002/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/05/17/Leetcode0002/","path":"2022/05/17/Leetcode0002/","title":"Leetcode0002 两数相加"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Leetcode0002 两数相加 | Coding and Living.</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coding and Living.</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Grumble"><span class="nav-number">4.</span> <span class="nav-text">Grumble</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Henry Liao"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Henry Liao</p>
+  <div class="site-description" itemprop="description">An unimpressive blog</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/17/Leetcode0002/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Henry Liao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coding and Living.">
+      <meta itemprop="description" content="An unimpressive blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Leetcode0002 两数相加 | Coding and Living.">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Leetcode0002 两数相加
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-05-17 16:04:56 / Modified: 16:07:25" itemprop="dateCreated datePublished" datetime="2022-05-17T16:04:56+08:00">2022-05-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Leetcode/" itemprop="url" rel="index"><span itemprop="name">Leetcode</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给你两个<strong>非空</strong>的链表，表示两个非负的整数。它们每位数字都是按照<strong>逆序</strong>的方式存储的，并且每个节点只能存储<strong>一位</strong>数字。</p>
+<p>请你将两个数相加，并以相同形式返回一个表示和的链表。</p>
+<p>你可以假设除了数字 <code>0</code> 之外，这两个数都不会以 <code>0</code> 开头。</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>题目已经明确提示了使用单链表，逆序存储也为我们解决了数字相加的<strong>对齐问题</strong>，降低了求解的难度</p>
+<p>主要的注意点就在于：</p>
+<ol>
+<li>进位问题</li>
+<li>某一链表扫完而另一个链表有剩余的情况</li>
+<li>最高位存在进位（结果最高位为1）</li>
+</ol>
+<p>解决进位问题就使用一个 <code>flag</code> 标识位即可，当前 <code>node</code> 存在进位则置为 <code>1</code> ，无进位则置为 <code>0</code> ，求和时直接<code>Val1 + Val2 + flag</code></p>
+<p>解决第二个问题很简单，将剩对链表复制到结果中即可，但复制时依然要考虑进位</p>
+<p>解决最高位进位问题，在两个链表均扫完后，检查 <code>flag</code> 是否为 <code>1</code> ，为 <code>1</code> 则<code>new</code>一个节点存 <code>1</code> 即可</p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * type ListNode struct &#123;</span></span><br><span class="line"><span class="comment"> *     Val int</span></span><br><span class="line"><span class="comment"> *     Next *ListNode</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">addTwoNumbers</span><span class="params">(l1 *ListNode, l2 *ListNode)</span></span> *ListNode &#123;</span><br><span class="line">	flag := <span class="number">0</span></span><br><span class="line">	node1, node2 := l1, l2</span><br><span class="line">	<span class="keyword">var</span> result = <span class="built_in">new</span>(ListNode)</span><br><span class="line">	pNode := result</span><br><span class="line">	firstNum := sum(node1.Val, node2.Val, &amp;flag)</span><br><span class="line">	pNode.Val = firstNum</span><br><span class="line">	node1 = node1.Next</span><br><span class="line">	node2 = node2.Next</span><br><span class="line">	<span class="keyword">for</span> node1 != <span class="literal">nil</span> || node2 != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="comment">//两数都未扫完</span></span><br><span class="line">		<span class="keyword">if</span> node1 != <span class="literal">nil</span> &amp;&amp; node2 != <span class="literal">nil</span> &#123;</span><br><span class="line">			nodeVal := sum(node1.Val, node2.Val, &amp;flag)</span><br><span class="line">			pNode.Next = <span class="built_in">new</span>(ListNode)</span><br><span class="line">			pNode = pNode.Next</span><br><span class="line">			pNode.Val = nodeVal</span><br><span class="line">			<span class="comment">//继续扫描下一位</span></span><br><span class="line">			node1 = node1.Next</span><br><span class="line">			node2 = node2.Next</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> node1 == <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="comment">//直接copy剩下的node</span></span><br><span class="line">			<span class="keyword">for</span> node2 != <span class="literal">nil</span> &#123;</span><br><span class="line">				pNode.Next = <span class="built_in">new</span>(ListNode)</span><br><span class="line">				pNode = pNode.Next</span><br><span class="line">				<span class="comment">//还要检查是否会存在进位</span></span><br><span class="line">				node2Val := sum(<span class="number">0</span>, node2.Val, &amp;flag)</span><br><span class="line">				pNode.Val = node2Val</span><br><span class="line">				node2 = node2.Next</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">for</span> node1 != <span class="literal">nil</span> &#123;</span><br><span class="line">				pNode.Next = <span class="built_in">new</span>(ListNode)</span><br><span class="line">				pNode = pNode.Next</span><br><span class="line">				node1Val := sum(<span class="number">0</span>, node1.Val, &amp;flag)</span><br><span class="line">				pNode.Val = node1Val</span><br><span class="line">				node1 = node1.Next</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//如果最后flag为1，说明又进了一位</span></span><br><span class="line">	<span class="keyword">if</span> flag == <span class="number">1</span> &#123;</span><br><span class="line">		pNode.Next = <span class="built_in">new</span>(ListNode)</span><br><span class="line">		pNode = pNode.Next</span><br><span class="line">		pNode.Val = <span class="number">1</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//两位相加，并更新flag</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">sum</span><span class="params">(nodeValue1, nodeValue2 <span class="type">int</span>, pFlag *<span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	sum := nodeValue1 + nodeValue2 + *pFlag</span><br><span class="line">	<span class="keyword">if</span> sum &gt; <span class="number">9</span> &#123;</span><br><span class="line">		*pFlag = <span class="number">1</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		*pFlag = <span class="number">0</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> sum % <span class="number">10</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Grumble"><a href="#Grumble" class="headerlink" title="Grumble"></a>Grumble</h2><p>本题确实难度不大，情况考虑周全即可，但是目前自己写的解法性能一般，后面考虑下能否提升性能</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Leetcode/" rel="tag"># Leetcode</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/05/10/Leetcode0011/" rel="prev" title="Leetcode0011 Container with Most Water">
+                  <i class="fa fa-chevron-left"></i> Leetcode0011 Container with Most Water
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/05/17/Leetcode0016/" rel="next" title="Leetcode0016 最接近的三数之和">
+                  Leetcode0016 最接近的三数之和 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Henry Liao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

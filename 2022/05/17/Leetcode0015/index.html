@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.11.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="题目描述给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c &#x3D; 0 ？请你找出所有和为 0 且不重复的三元组。 注意：答案中不可以包含重复的三元组。 题解自己写这道三数之和的题目时的思路历程：  采用三重循环进行遍历，使用一个flag数组标志元素是否被访问过以解决重复问题 问题：正确的结果二维数组应该是一维数组元素内具有递增顺序，二">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Leetcode0015 threeSum">
+<meta property="og:url" content="http://example.com/2022/05/17/Leetcode0015/index.html">
+<meta property="og:site_name" content="Coding and Living.">
+<meta property="og:description" content="题目描述给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c &#x3D; 0 ？请你找出所有和为 0 且不重复的三元组。 注意：答案中不可以包含重复的三元组。 题解自己写这道三数之和的题目时的思路历程：  采用三重循环进行遍历，使用一个flag数组标志元素是否被访问过以解决重复问题 问题：正确的结果二维数组应该是一维数组元素内具有递增顺序，二">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-05-17T08:06:15.828Z">
+<meta property="article:modified_time" content="2022-05-17T08:07:35.853Z">
+<meta property="article:author" content="Henry Liao">
+<meta property="article:tag" content="Leetcode">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2022/05/17/Leetcode0015/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://example.com/2022/05/17/Leetcode0015/","path":"2022/05/17/Leetcode0015/","title":"Leetcode0015 threeSum"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Leetcode0015 threeSum | Coding and Living.</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Coding and Living.</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">题解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Grumble"><span class="nav-number">4.</span> <span class="nav-text">Grumble</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Henry Liao"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Henry Liao</p>
+  <div class="site-description" itemprop="description">An unimpressive blog</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/05/17/Leetcode0015/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Henry Liao">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coding and Living.">
+      <meta itemprop="description" content="An unimpressive blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Leetcode0015 threeSum | Coding and Living.">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Leetcode0015 threeSum
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-05-17 16:06:15 / Modified: 16:07:35" itemprop="dateCreated datePublished" datetime="2022-05-17T16:06:15+08:00">2022-05-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Leetcode/" itemprop="url" rel="index"><span itemprop="name">Leetcode</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h2><p>给你一个包含 <code>n</code> 个整数的数组 <code>nums</code>，判断 <code>nums</code> 中是否存在三个元素 <code>a，b，c</code> ，使得 <code>a + b + c = 0</code> ？请你找出所有和为 <code>0</code> 且不重复的三元组。</p>
+<p>注意：答案中不可以包含重复的三元组。</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>自己写这道三数之和的题目时的思路历程：</p>
+<ol>
+<li><p>采用三重循环进行遍历，使用一个<code>flag</code>数组标志元素是否被访问过以解决重复问题</p>
+<p>问题：正确的结果二维数组应该是一维数组元素内具有递增顺序，二维数组内的各个一维数组也按维度具有递增顺序</p>
+<p>而直接三重遍历得到的结果是遍历顺序而非递增</p>
+</li>
+<li><p>解决方法：对于得到的三个元素先进行组内排序，在将这组元素<code>append</code>到二维数组时进行组间排序</p>
+<p>问题：这样的额外操作及其耗时，是直接导致后面的超时原因之一</p>
+</li>
+<li><p>再次进行测试，出现了结果数据遗漏的情况，发现是采用<code>flag</code>数组的原因：</p>
+<p>flag数组的执行逻辑是只要当前的三个数字之和为0，即标记这三个数字为已访问，以后不再考虑</p>
+<p>对于**[3,0,-2,-1,1,2]**这样的测试用例，得到第一组解[-2, -1, 3]后，3、-2、-1在之后的循环都不再访问，但其实还有[ -2, 0, 2]、[-1, 0, 1]这样的解，说明不能简单的认为和为0的三个数不能再组成解</p>
+</li>
+<li><p>解决方法：去掉flag数组，在append时进行去重</p>
+<p>问题：解答正确，但超时</p>
+</li>
+</ol>
+<p>附上自己写的解法：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">threeSum</span><span class="params">(a []<span class="type">int</span>)</span></span> [][]<span class="type">int</span> &#123;</span><br><span class="line">	<span class="keyword">var</span> result [][]<span class="type">int</span></span><br><span class="line">	size := <span class="built_in">len</span>(a)</span><br><span class="line">	flag := <span class="built_in">make</span>([]<span class="type">int</span>, size)</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; size; i++ &#123;</span><br><span class="line">		<span class="keyword">if</span> flag[i] == <span class="number">1</span> &#123;</span><br><span class="line">			<span class="keyword">continue</span></span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			num1 := a[i]</span><br><span class="line"></span><br><span class="line">			<span class="keyword">for</span> j := i + <span class="number">1</span>; j &lt; size; j++ &#123;</span><br><span class="line">				<span class="keyword">if</span> flag[j] == <span class="number">1</span> &#123;</span><br><span class="line">					<span class="keyword">continue</span></span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					num2 := a[j]</span><br><span class="line">					num3 := <span class="number">0</span> - num1 - num2</span><br><span class="line">					<span class="keyword">for</span> k := j + <span class="number">1</span>; k &lt; size; k++ &#123;</span><br><span class="line">						<span class="keyword">if</span> a[k] == num3 &#123;</span><br><span class="line">							result = myAppend(result, updateArray(i, j, k, a))</span><br><span class="line">							flag = updateFlag(a, flag, i, j, k)</span><br><span class="line">							<span class="keyword">break</span></span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">myAppend</span><span class="params">(array [][]<span class="type">int</span>, a []<span class="type">int</span>)</span></span> [][]<span class="type">int</span> &#123;</span><br><span class="line">	size := <span class="built_in">len</span>(array)</span><br><span class="line">	<span class="comment">//若当前结果数组为空</span></span><br><span class="line">	<span class="comment">//直接插入即可</span></span><br><span class="line">	<span class="keyword">if</span> size == <span class="number">0</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">append</span>(array, a)</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; size; i++ &#123;</span><br><span class="line">			<span class="comment">//若所插入数组的第一个元素就小于结果数组</span></span><br><span class="line">			<span class="comment">//插到最前面</span></span><br><span class="line">			<span class="keyword">if</span> array[i][<span class="number">0</span>] &gt; a[<span class="number">0</span>] &#123;</span><br><span class="line">				array = <span class="built_in">append</span>(array[:i], a[i<span class="number">-1</span>:])</span><br><span class="line">				array[i] = a</span><br><span class="line">				<span class="keyword">return</span> array</span><br><span class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> array[i][<span class="number">0</span>] == a[<span class="number">0</span>] &#123;</span><br><span class="line">				<span class="keyword">if</span> array[i][<span class="number">1</span>] &gt; a[<span class="number">1</span>] &#123;</span><br><span class="line">					array = <span class="built_in">append</span>(array, a)</span><br><span class="line">					<span class="built_in">copy</span>(array[i+<span class="number">1</span>:], array[i:])</span><br><span class="line">					<span class="comment">// array = append(array[:i+1], a[i:])</span></span><br><span class="line">					array[i] = a</span><br><span class="line">					<span class="keyword">return</span> array</span><br><span class="line">				&#125; <span class="keyword">else</span> <span class="keyword">if</span> array[i][<span class="number">1</span>] == a[<span class="number">1</span>] &#123;</span><br><span class="line">					<span class="keyword">if</span> array[i][<span class="number">2</span>] &gt; a[<span class="number">2</span>] &#123;</span><br><span class="line">						array = <span class="built_in">append</span>(array[:i+<span class="number">1</span>], a[i:])</span><br><span class="line">						array[i] = a</span><br><span class="line">						<span class="keyword">return</span> array</span><br><span class="line">					&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">						<span class="keyword">if</span> i == size<span class="number">-1</span> &#123;</span><br><span class="line">							<span class="keyword">return</span> <span class="built_in">append</span>(array, a)</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					<span class="keyword">if</span> i == size<span class="number">-1</span> &#123;</span><br><span class="line">						<span class="keyword">return</span> <span class="built_in">append</span>(array, a)</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> i == size<span class="number">-1</span> &#123;</span><br><span class="line">					<span class="keyword">return</span> <span class="built_in">append</span>(array, a)</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> array</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">updateArray</span><span class="params">(num1, num2, num3 <span class="type">int</span>, a []<span class="type">int</span>)</span></span> []<span class="type">int</span> &#123;</span><br><span class="line">	result := <span class="built_in">make</span>([]<span class="type">int</span>, <span class="number">3</span>)</span><br><span class="line">	max, medium, min := <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">	<span class="keyword">if</span> a[num1] &gt; a[num2] &#123;</span><br><span class="line">		<span class="keyword">if</span> a[num2] &gt; a[num3] &#123;</span><br><span class="line">			max = a[num1]</span><br><span class="line">			medium = a[num2]</span><br><span class="line">			min = a[num3]</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> a[num1] &gt; a[num3] &#123;</span><br><span class="line">			max = a[num1]</span><br><span class="line">			medium = a[num3]</span><br><span class="line">			min = a[num2]</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			max = a[num3]</span><br><span class="line">			medium = a[num1]</span><br><span class="line">			min = a[num2]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> a[num1] &gt; a[num3] &#123;</span><br><span class="line">			max = a[num2]</span><br><span class="line">			medium = a[num1]</span><br><span class="line">			min = a[num3]</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> a[num2] &gt; a[num3] &#123;</span><br><span class="line">			max = a[num2]</span><br><span class="line">			medium = a[num3]</span><br><span class="line">			min = a[num1]</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			max = a[num3]</span><br><span class="line">			medium = a[num2]</span><br><span class="line">			min = a[num1]</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	result[<span class="number">0</span>] = min</span><br><span class="line">	result[<span class="number">1</span>] = medium</span><br><span class="line">	result[<span class="number">2</span>] = max</span><br><span class="line">	<span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">updateFlag</span><span class="params">(nums, flag []<span class="type">int</span>, num1, num2, num3 <span class="type">int</span>)</span></span> []<span class="type">int</span> &#123;</span><br><span class="line">	size := <span class="built_in">len</span>(nums)</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; size; i++ &#123;</span><br><span class="line">		<span class="keyword">if</span> nums[i] == nums[num1] || nums[i] == nums[num2] || nums[i] == nums[num3] &#123;</span><br><span class="line">			flag[i] = <span class="number">1</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> flag</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>回顾自己的做题过程，可以看出自己进行代码优化时，思维是很杂乱的，总会解法中的某一步选择一种更为复杂的方法，导致之后的解答过程也愈发复杂。</p>
+<p>下面展示正确的解法以及思路优化过程：</p>
+<ol>
+<li><p>三重循环求解</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(a); i++ &#123;</span><br><span class="line">  <span class="keyword">for</span> j := i + <span class="number">1</span>; j &lt; <span class="built_in">len</span>(a); j++ &#123;</span><br><span class="line">    <span class="keyword">for</span> k := j + <span class="number">1</span>; k &lt; <span class="built_in">len</span>(a); k++ &#123;</span><br><span class="line">      check(i, j, k)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>问题：组内组间接的顺序问题，重复解问题</p>
+</li>
+<li><p>解决顺序问题：</p>
+<p>将所给的数组首先进行排序操作，这样遍历顺序就是递增顺序，还方便优化之后寻找解的过程</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sort(a)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(a); i++ &#123;</span><br><span class="line">  <span class="keyword">for</span> j := i + <span class="number">1</span>; j &lt; <span class="built_in">len</span>(a); j++ &#123;</span><br><span class="line">    <span class="keyword">for</span> k := j + <span class="number">1</span>; k &lt; <span class="built_in">len</span>(a); k++ &#123;</span><br><span class="line">      check(i, j, k)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解决重复解问题</p>
+<p>因为数组以及按递增顺序排好，所以相同的数字会成块存在</p>
+<p>类似**[-2, -2, -1, 0, 0, 0, 1, 1, 2, 2]**</p>
+<p>只要每一层循环都只去迭代不同的数字就行</p>
+<p>对于第一层循环：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(a); i++ &#123;</span><br><span class="line">  <span class="comment">//要么是数组内第一个数字，要么和迭代前一个数字不同</span></span><br><span class="line">  <span class="keyword">if</span> i == <span class="number">0</span> || a[i] != a[i - <span class="number">1</span>] &#123;</span><br><span class="line">    第二层循环...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二层循环：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> j := i + <span class="number">1</span>; j &lt; <span class="built_in">len</span>(a); j++ &#123;</span><br><span class="line">  <span class="comment">//要么是数字1之后的第一个数字，要么和迭代前一个数字不同</span></span><br><span class="line">  <span class="keyword">if</span> j == i + <span class="number">1</span> || a[j] != a[j - <span class="number">1</span>] &#123;</span><br><span class="line">    第三层循环...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第三层循环：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> k := j + <span class="number">1</span>; k &lt; <span class="built_in">len</span>(a); k++ &#123;</span><br><span class="line">  <span class="comment">//要么是数字2之后的第一个数字，要么和迭代前一个数字不同</span></span><br><span class="line">  <span class="keyword">if</span> k == j + <span class="number">1</span> || a[k] != a[k - <span class="number">1</span>] &#123;</span><br><span class="line">    check(i, j, k)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解决了顺序和重复解问题，现在还是超时，因为算法的复杂度依然是 <code>O(n^3)</code> ，还需想办法让算法更快</p>
+<p>我们要找的是 <code>a + b + c = 0</code>，当a固定后，若b增大，那么要让和为0，则c必定是减小的</p>
+<p>这样的性质符合双指针的做法：当我们需要枚举数组中的两个元素时，如果我们发现随着第一个元素的递增，第二个元素是递减的，那么就可以使用双指针的方法，将枚举的时间复杂度从 <code>O(n^2)</code> 减少至 <code>O(n)</code> 。</p>
+<p>性能解决方法：定义一个指向数字3的指针，数字1和数字2从小到大迭代时，从大到小迭代寻找数字3</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(a); i++ &#123;</span><br><span class="line">  	<span class="comment">//	每次重新迭代num2时，都要重新从数组尾开始查找num3</span></span><br><span class="line">		third := <span class="built_in">len</span>(a) - <span class="number">1</span></span><br><span class="line">		<span class="comment">//控制第一层循环不重复</span></span><br><span class="line">		<span class="keyword">if</span> i == <span class="number">0</span> || a[i] != a[i - <span class="number">1</span>] &#123;</span><br><span class="line">			<span class="keyword">for</span> j := i + <span class="number">1</span>; j &lt; <span class="built_in">len</span>(a); j++ &#123;</span><br><span class="line">				<span class="keyword">if</span> j == i + <span class="number">1</span> || a[j] != a[j - <span class="number">1</span>] &#123;</span><br><span class="line">					<span class="keyword">for</span> a[i] + a[j] + a[third] &gt; <span class="number">0</span> &amp;&amp; j &lt; third&#123;</span><br><span class="line">						third--</span><br><span class="line">					&#125;</span><br><span class="line">          <span class="comment">//一定要考虑指针对撞的情况</span></span><br><span class="line">          <span class="keyword">if</span> j == third &#123;</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">          &#125;</span><br><span class="line">					<span class="keyword">if</span> a[i] + a[j] + a[third] == <span class="number">0</span> &#123;</span><br><span class="line">						result = <span class="built_in">append</span>(result, []<span class="type">int</span>&#123;a[i], a[j], a[third]&#125;)</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">threeSum</span><span class="params">(a []<span class="type">int</span>)</span></span> [][]<span class="type">int</span> &#123;</span><br><span class="line">	result := <span class="built_in">make</span>([][]<span class="type">int</span>, <span class="number">0</span>)</span><br><span class="line">	<span class="comment">//对a递增排序</span></span><br><span class="line">	quickSort(a, <span class="number">0</span>, <span class="built_in">len</span>(a) - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(a); i++ &#123;</span><br><span class="line">		third := <span class="built_in">len</span>(a) - <span class="number">1</span></span><br><span class="line">		<span class="comment">//控制第一层循环不重复</span></span><br><span class="line">		<span class="keyword">if</span> i == <span class="number">0</span> || a[i] != a[i - <span class="number">1</span>] &#123;</span><br><span class="line">			<span class="keyword">for</span> j := i + <span class="number">1</span>; j &lt; <span class="built_in">len</span>(a); j++ &#123;</span><br><span class="line">				<span class="keyword">if</span> j == i + <span class="number">1</span> || a[j] != a[j - <span class="number">1</span>] &#123;</span><br><span class="line">					<span class="keyword">for</span> a[i] + a[j] + a[third] &gt; <span class="number">0</span> &amp;&amp; j &lt; third&#123;</span><br><span class="line">						third--</span><br><span class="line">					&#125;</span><br><span class="line">                    <span class="keyword">if</span> j == third &#123;</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line">                    &#125;</span><br><span class="line">					<span class="keyword">if</span> a[i] + a[j] + a[third] == <span class="number">0</span> &#123;</span><br><span class="line">						result = <span class="built_in">append</span>(result, []<span class="type">int</span>&#123;a[i], a[j], a[third]&#125;)</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">quickSort</span><span class="params">(a []<span class="type">int</span>, low, high <span class="type">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> low &lt; high &#123;</span><br><span class="line">		pivot := partition(a, low, high)</span><br><span class="line"></span><br><span class="line">		quickSort(a, low, pivot<span class="number">-1</span>)</span><br><span class="line">		quickSort(a, pivot+<span class="number">1</span>, high)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">partition</span><span class="params">(a []<span class="type">int</span>, low, high <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	<span class="comment">//确定支点元素，可以是第一个、最后一个、中间一个、随机一个</span></span><br><span class="line">	pivot := a[high]</span><br><span class="line">	<span class="comment">//i指向较小元素应该交换的位置</span></span><br><span class="line">	i := low - <span class="number">1</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> j := low; j &lt; high; j++ &#123;</span><br><span class="line">		<span class="keyword">if</span> a[j] &lt; pivot &#123;</span><br><span class="line">			i++</span><br><span class="line">			swap(a, i, j)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//最后交换pivot与i + 1所指元素</span></span><br><span class="line">	swap(a, i+<span class="number">1</span>, high)</span><br><span class="line">	<span class="keyword">return</span> (i + <span class="number">1</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">swap</span><span class="params">(arr []<span class="type">int</span>, i, j <span class="type">int</span>)</span></span> &#123;</span><br><span class="line">	tmp := arr[i]</span><br><span class="line">	arr[i] = arr[j]</span><br><span class="line">	arr[j] = tmp</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Grumble"><a href="#Grumble" class="headerlink" title="Grumble"></a>Grumble</h2><ol>
+<li>复习了一下快排，<a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/quick-sort/">这篇文章讲的不错</a></li>
+<li>什么时候使用双指针：当我们需要枚举数组中的两个元素时，如果我们发现随着第一个元素的递增，第二个元素是递减的，那么就可以使用双指针的方法</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Leetcode/" rel="tag"># Leetcode</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/05/17/Leetcode0016/" rel="prev" title="Leetcode0016 最接近的三数之和">
+                  <i class="fa fa-chevron-left"></i> Leetcode0016 最接近的三数之和
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Henry Liao</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
